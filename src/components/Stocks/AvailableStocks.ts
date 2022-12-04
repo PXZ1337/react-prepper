@@ -16,7 +16,7 @@ const AvailableStocks = () => {
             durable: new Date('2024-12-04'),
         },
         {
-            id: '1',
+            id: '2',
             name: 'Sixpack Wasser',
             stock: 1,
             capacity: 6,
@@ -26,7 +26,7 @@ const AvailableStocks = () => {
             dateModified: new Date('2022-12-04'),
             durable: new Date('2024-12-04'),
         }, {
-            id: '1',
+            id: '3',
             name: 'Sixpack Wasser',
             stock: 1,
             capacity: 6,
