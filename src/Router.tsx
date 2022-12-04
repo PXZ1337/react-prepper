@@ -5,14 +5,14 @@ import CategoryList from "./pages/category/CategoryListPage";
 import Dashboard from "./pages/DashboardPage";
 import ErrorBoundery from "./pages/ErrorBoundery";
 import StockAdd from "./pages/stock/StockAddPage";
-import StockList from "./pages/stock/StockListPage";
+import StockByIdPage from "./pages/stock/StockByIdPage";
 
 export const Routes = {
     DASHBOARD: '/',
     CATEGORY_LIST: '/categories',
     CATEGORY_BY_ID: '/category/:id',
-    STOCK_LIST: '/stocks',
-    ADD_STOCK: '/stocks/add'
+    STOCK_BY_ID: '/stock/:id',
+    ADD_STOCK: '/stock/add'
 }
 
 export const getByIdRoute = (path: string, id: string) => {
@@ -38,8 +38,8 @@ const router = createBrowserRouter([
                 element: <CategoryByIdPage />,
             },
             {
-                path: Routes.STOCK_LIST,
-                element: <StockList />,
+                path: Routes.STOCK_BY_ID,
+                element: <StockByIdPage />,
             },
             {
                 path: Routes.ADD_STOCK,
