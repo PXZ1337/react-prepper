@@ -7,7 +7,13 @@ const CategoryList = () => {
     const availableCategories = AvailableCategories().map((category: ICategory) => {
         const randomStock = Math.round(Math.random() * category.goal)
 
-        return <CategoryGridItem name={category.name} stock={randomStock} goal={category.goal} unit={category.unit} />
+        return <CategoryGridItem
+            key={category.id}
+            id={category.id}
+            name={category.name}
+            stock={randomStock}
+            goal={category.goal}
+            unit={category.unit} />
     })
 
 

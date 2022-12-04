@@ -1,0 +1,23 @@
+.button {
+    padding: 8px 15px;
+    width: 150px;
+    margin: 10px;
+    color: #fff;
+    border-radius: 3px;
+    text-transform: uppercase;
+}
+
+.cancel {
+    background-color: darkred;
+    border: 1px solid darkred;
+}
+
+.save {
+    background-color: green;
+    border: 1px solid green;
+}
+
+.create {
+    background-color: #40005d;
+    border: 1px solid #40005d;
+}
