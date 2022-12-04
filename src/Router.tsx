@@ -8,6 +8,7 @@ import StockAdd from "./pages/stock/StockAddPage";
 import StockList from "./pages/stock/StockListPage";
 
 export const Routes = {
+    DASHBOARD: '/',
     CATEGORY_LIST: '/categories',
     CATEGORY_BY_ID: '/category/:id',
     STOCK_LIST: '/stocks',
@@ -20,7 +21,7 @@ export const getByIdRoute = (path: string, id: string) => {
 
 const router = createBrowserRouter([
     {
-        path: '/',
+        path: Routes.DASHBOARD,
         element: <App />,
         errorElement: <ErrorBoundery />,
         children: [

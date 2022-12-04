@@ -1,0 +1,26 @@
+.stock-item {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 3px;
+    color: #000;
+    margin: 25px 0;
+    position: relative;
+}
+
+.stock-item .category,
+.stock-item .meta {
+    color: #616060
+}
+
+.stock-item .meta {
+    font-size: 0.7rem;
+}
+
+.stock-item .actions {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: 20%;
+    min-width: 100px;
+}

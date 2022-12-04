@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { formatPercent, formatRange } from '../../common/Format'
 import { getByIdRoute, Routes } from '../../Router'
 import GridItem from '../UI/GridItem'
@@ -14,6 +14,9 @@ interface CategoryGridItemProps {
 
 const CategoryGridItem = (props: CategoryGridItemProps) => {
     const navigate = useNavigate()
+    const location = useLocation();
+    const params = useParams();
+
     const reached = props.stock / props.goal * 100
 
     let itemClass = classes.critical
@@ -25,7 +28,9 @@ const CategoryGridItem = (props: CategoryGridItemProps) => {
     }
 
     const onClickHandler = (categoryId: string) => {
-        navigate(getByIdRoute(Routes.CATEGORY_BY_ID, categoryId), { state: { categoryId } })
+        const destinationPath = getByIdRoute(Routes.CATEGORY_BY_ID, categoryId)
+        // Prevent re navigation by clicking at the GridItem link on category_id page
+        if (location.pathname !== destinationPath) navigate(destinationPath, { state: { categoryId } })
     }
 
     return <GridItem onClickHandler={onClickHandler.bind(null, props.id)} classNames={[itemClass]}>

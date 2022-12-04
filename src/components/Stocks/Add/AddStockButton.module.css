@@ -10,11 +10,12 @@
 }
 
 .add-stock-button:hover {
-    color: #000;
-    background-color: #fff;
+    background-color: #18068a;
+    border-color: #fff;
+    color: #fff;
 }
 
-a {
+.add-stock-button a {
     text-decoration: none;
     color: inherit;
     padding: 10px 15px;

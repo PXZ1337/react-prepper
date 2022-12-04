@@ -1,13 +1,17 @@
+import { useNavigate } from 'react-router-dom'
 import classes from './Button.module.css'
 
 interface ButtonProps {
-    classNames: string[],
-    onClick?: any,
-    children: React.ReactNode
+    onClickHandler: () => void,
+    children: any
 }
 
 const Button = (props: ButtonProps) => {
-    return <button type="submit" onClick={props.onClick} className={`${classes.button} ${props.classNames.join(' ')}`}>{props.children}</button>
+    const navigate = useNavigate()
+
+    return <div onClick={props.onClickHandler} className={classes.button}>
+        <p>{props.children}</p>
+    </div>
 }
 
 export default Button

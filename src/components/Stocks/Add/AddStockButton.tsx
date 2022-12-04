@@ -4,7 +4,9 @@ import classes from './AddStockButton.module.css'
 
 const AddStockButton = () => {
     return <div className={classes['add-stock-button']}>
-        <Link to={Routes.ADD_STOCK}>ADD NEW STOCK</Link>
+        <p>
+            <Link to={Routes.ADD_STOCK}>ADD NEW STOCK</Link>
+        </p>
     </div>
 }
 
