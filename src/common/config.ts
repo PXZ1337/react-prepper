@@ -1,18 +1,14 @@
 import { initializeApp } from "firebase/app";
+import FirebaseConfig from '../assets/config.json'
 
-const firebaseConfig = {
-    databaseURL: "DATABASE_URI",
-    apiKey: "API_KEY"
-};
-
-export const app = initializeApp(firebaseConfig);
+export const app = initializeApp(FirebaseConfig);
 
 interface IConfig {
     backendBaseUrl: string
 }
 
 const config: IConfig = {
-    backendBaseUrl: 'DATABASE_URI',
+    backendBaseUrl: `${FirebaseConfig.databaseURL}/prepper`,
 }
 
 export default config
