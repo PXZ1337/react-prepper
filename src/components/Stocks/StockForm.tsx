@@ -264,7 +264,7 @@ const StockForm = (props: StockFormProps) => {
         {isSubmitError && <ContentCard>{submitError}</ContentCard>}
 
         <ButtonCard>
-            <Button buttonType={ButtonType.BACK} onClickHandler={() => navigate(-1)}>CANCEL</Button>
+            <Button buttonType={ButtonType.BACK} onClickHandler={() => navigate(-1)}>ABBRECHEN</Button>
             <Button buttonType={formIsValid ? ButtonType.PRIMARY : ButtonType.DISABLED} buttonProps={{ type: "submit" }}>{props.stock ? 'ÄNDERN' : 'ERSTELLEN'}</Button>
         </ButtonCard>
     </form>

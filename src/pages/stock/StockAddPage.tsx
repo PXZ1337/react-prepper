@@ -15,7 +15,7 @@ const StockAddPage = () => {
 
     return <Fragment>
         <Container>
-            <Headline type={HeadlineType.PRIMARY} caption="create a new stock">Add stock form</Headline>
+            <Headline type={HeadlineType.PRIMARY} caption="neuen Bestand hinzufügen">Erstellen</Headline>
             <AddStockForm categoryTree={data} />
         </Container>
     </Fragment>
