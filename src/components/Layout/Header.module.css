@@ -1,15 +1,18 @@
 .header {
-  position: fixed;
-  top: 0;
-  height: 5rem;
-  margin: 0 auto;
-  width: calc(100% - 2px);
-  box-shadow: 0 5px 8px rgba(0, 0, 0, 0.25);
-  z-index: 10;
-  border: 1px solid #fff;
+    position: fixed;
+    z-index: 10;
+    top: 0;
+    height: 5rem;
+    width: calc(100% - 2px);
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    border: 1px solid #fff;
+    box-shadow: 0 5px 8px rgba(0, 0, 0, 0.25);
 }
 
 .header .inner {
-  padding: 1.5rem;
-  color: inherit;
+    padding: 1.5rem;
+    color: inherit;
+    flex-grow: 2;
 }
