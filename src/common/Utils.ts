@@ -6,3 +6,7 @@ export const groupBy = (list: any[], col: string) => {
         return grouped
     }, {})
 }
+
+export const sleep = (time: number) => {
+    return new Promise((resolve) => setTimeout(resolve, time));
+}

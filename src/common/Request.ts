@@ -1,10 +1,7 @@
-import Authenticate from "../api/authenticate";
+import { getToken, resetToken } from "./AuthToken";
 
-export const sleep = () => {
-    return new Promise((resolve) => setTimeout(resolve, 2000));
-}
-
-export const addRequest = async (url: string, params: object) => {
+export const addRequest = async (url: string, params: object, execution: number = 1): Promise<any> => {
+    const maxRetries = 2
     const token = localStorage.getItem('token')
     const response = await fetch(`${url}?auth=${token}`, {
         method: 'POST',
@@ -14,6 +11,13 @@ export const addRequest = async (url: string, params: object) => {
         ...params
     })
 
+    if (response.status === 401) {
+        await resetToken()
+        while (execution < maxRetries) {
+            return await addRequest(url, params, ++execution)
+        }
+    }
+
     if (!response.ok) {
         throw response
     }
@@ -21,22 +25,22 @@ export const addRequest = async (url: string, params: object) => {
     return await response.json()
 }
 
-const getToken = async () => {
-    const token = localStorage.getItem('token')
-    if (!token) {
-        await Authenticate()
-    }
-    return localStorage.getItem('token')
-}
-
-const fetchRequest = async (url: string, mapFunc?: (data: object, id: number) => {}) => {
-    const token = await getToken()
-    const response = await fetch(`${url}?auth=${token}`, {
+const fetchRequest = async (url: string, mapFunc?: (data: object, id: number) => {}, execution: number = 1): Promise<any> => {
+    const maxRetries = 2
+    let token = await getToken()
+    let response = await fetch(`${url}?auth=${token}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
         },
     })
+
+    if (response.status === 401) {
+        await resetToken()
+        while (execution < maxRetries) {
+            return await fetchRequest(url, mapFunc, ++execution)
+        }
+    }
 
     if (!response.ok) {
         throw response
