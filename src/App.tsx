@@ -1,28 +1,41 @@
-import { Outlet, useLoaderData } from 'react-router-dom';
-import Authenticate from './api/authenticate';
+import { Fragment, Suspense } from 'react';
+import { Await, defer, Outlet, useLoaderData } from 'react-router-dom';
 import { fetchStocks } from "./api/stock";
 import IStockDTO from "./common/dto/StockDTOs";
 import Header from './components/Layout/Header';
 import MainLayout from './components/Layout/MainLayout';
+import Loader from './components/UI/Loader/Loader';
+import ErrorBoundery from './pages/ErrorBoundery';
 import StockProvider from './store/Stock/StockProvider';
 
-export const loader = async () => {
-  await Authenticate()
+interface AppPageResponseDTO {
+    stocks: IStockDTO[]
+}
 
-  return fetchStocks()
+export const loader = async () => {
+    return defer({ stocks: fetchStocks() })
 }
 
 function App() {
-  const data = useLoaderData() as IStockDTO[]
-
-  return (
-    <StockProvider stocks={data}>
-      <Header />
-      <MainLayout>
-        <Outlet />
-      </MainLayout>
-    </StockProvider>
-  );
+    const data = useLoaderData() as AppPageResponseDTO
+    return (
+        <Fragment>
+            <Header />
+            <MainLayout>
+                <Suspense fallback={<Loader>lade app ...</Loader>}>
+                    <Await
+                        resolve={data.stocks}
+                        errorElement={<ErrorBoundery />}>
+                        {(stocks) => (
+                            <StockProvider stocks={stocks}>
+                                <Outlet />
+                            </StockProvider>
+                        )}
+                    </Await>
+                </Suspense>
+            </MainLayout>
+        </Fragment>
+    );
 }
 
 export default App;

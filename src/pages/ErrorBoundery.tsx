@@ -7,7 +7,6 @@ import Headline, { HeadlineType } from "../components/UI/Headline";
 
 const ErrorBoundery = () => {
     const error: any = useRouteError();
-
     return (
         <Fragment>
             <Header />

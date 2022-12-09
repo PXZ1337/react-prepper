@@ -1,19 +1,25 @@
-import React, { Fragment } from "react";
-import { Await, useLoaderData, useNavigate } from "react-router-dom";
+import { Fragment, Suspense } from "react";
+import { Await, defer, useLoaderData, useNavigate } from "react-router-dom";
 import { fetchCategories } from "../api/category";
 import { ICategoryDTO } from "../common/dto/CategoryDTOs";
 import CategoryList from "../components/Categories/CategoryList";
 import Button, { ButtonType } from "../components/UI/Button";
 import Container from "../components/UI/Container";
 import Headline, { HeadlineType } from "../components/UI/Headline";
+import Loader from "../components/UI/Loader/Loader";
 import { Routes } from "../Router";
+import ErrorBoundery from "./ErrorBoundery";
+
+interface DashboardPageResponseDTO {
+    categories: ICategoryDTO[]
+}
 
 export const loader = async () => {
-    return fetchCategories()
+    return defer({ categories: fetchCategories() })
 }
 
 const DashboardPage = () => {
-    const categories = useLoaderData() as ICategoryDTO[]
+    const data = useLoaderData() as DashboardPageResponseDTO
     const navigate = useNavigate()
 
     return (
@@ -24,19 +30,15 @@ const DashboardPage = () => {
                     NEU HINZUFÜGEN
                 </Button>
             </Container>
-
-
-            <React.Suspense fallback={<p>loading categories ...</p>}>
+            <Suspense fallback={<Loader>lade Kategorien ...</Loader>}>
                 <Await
-                    resolve={categories}
-                    errorElement={
-                        <div>Could not load categories 😬</div>
-                    }
-                    children={(resolvedCategories) => (
-                        <CategoryList items={resolvedCategories} />
+                    resolve={data.categories}
+                    errorElement={<ErrorBoundery />}
+                    children={(categories) => (
+                        <CategoryList items={categories} />
                     )}
                 />
-            </React.Suspense>
+            </Suspense>
         </Fragment>
     );
 }
