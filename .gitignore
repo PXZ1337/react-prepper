@@ -24,4 +24,3 @@ yarn-error.log*
 
 src/assets
 deploy.sh
-src/common/config.ts
