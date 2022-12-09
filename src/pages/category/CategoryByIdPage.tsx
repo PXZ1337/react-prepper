@@ -17,21 +17,20 @@ export const loader = (data: any) => {
 }
 
 const CategoryByIdPage = () => {
-    const data = useLoaderData() as ICategoryDTO
+    const category = useLoaderData() as ICategoryDTO
     const navigate = useNavigate()
     const context = useContext(StockContext)
 
-    const filtered = context.getStocksByParentCategoryId(data.id)
-    const stockCapacity = filtered.reduce((previousValue, currentValue) => previousValue + currentValue.abs, 0)
+    const filtered = context.getStocksByParentCategoryId(category.id)
 
     return <Fragment>
         <Container>
-            <Headline type={HeadlineType.PRIMARY}>{data.name}</Headline>
-            <CategoryGridItem id={data.id} name={data.name} stock={stockCapacity} goal={data.goal} unit={data.unit} />
+            <Headline type={HeadlineType.PRIMARY}>{category.name}</Headline>
+            <CategoryGridItem id={category.id} name={category.name} stock={context.calculateCapacityByCategory(category)} goal={category.goal} unit={category.unit} />
 
             <ButtonCard>
                 <Button buttonType={ButtonType.BACK} onClickHandler={() => { navigate(Routes.DASHBOARD) }}>ZURÜCK</Button>
-                <Button buttonType={ButtonType.PRIMARY} onClickHandler={() => navigate(Routes.ADD_STOCK, { state: { categoryId: data.id, unit: data.unit } })}>
+                <Button buttonType={ButtonType.PRIMARY} onClickHandler={() => navigate(Routes.ADD_STOCK)}>
                     NEU HINZUFÜGEN
                 </Button>
             </ButtonCard>

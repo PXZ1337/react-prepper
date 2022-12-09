@@ -1,7 +1,5 @@
-import React from "react";
-import { Fragment } from "react";
+import React, { Fragment } from "react";
 import { Await, useLoaderData, useNavigate } from "react-router-dom";
-import Authenticate from "../api/authenticate";
 import { fetchCategories } from "../api/category";
 import { ICategoryDTO } from "../common/dto/CategoryDTOs";
 import CategoryList from "../components/Categories/CategoryList";

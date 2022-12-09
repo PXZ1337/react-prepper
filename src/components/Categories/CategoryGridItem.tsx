@@ -1,11 +1,9 @@
 import { GiBattery75, GiFireplace, GiFruitBowl, GiFruitTree, GiGymBag, GiMeat, GiMedicines, GiMilkCarton, GiOilDrum, GiPotato, GiSittingDog, GiVirus, GiWaterBottle } from "react-icons/gi"
 import { useLocation, useNavigate } from 'react-router-dom'
 import { formatPercent, formatUnit } from '../../common/Format'
-import Unit from "../../common/Unit"
 import { getByIdRoute, Routes } from '../../Router'
 import GridItem from '../UI/GridItem'
 import classes from './CategoryGridItem.module.css'
-
 
 interface CategoryGridItemProps {
     id: number
@@ -20,13 +18,6 @@ const CategoryGridItem = (props: CategoryGridItemProps) => {
     const location = useLocation();
 
     let reached = props.stock / props.goal * 100
-
-    /*switch (props.unit) {
-        case Unit.items:
-            rea
-            break
-    }*/
-
     let itemClass = 'color1'
     let key = props.id
 

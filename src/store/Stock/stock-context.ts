@@ -1,9 +1,14 @@
 import React from 'react'
+import { ICategoryDTO } from '../../common/dto/CategoryDTOs'
 import IStockDTO from '../../common/dto/StockDTOs'
 import { stockIterableTypeHelp } from './StockAction'
 
 const StockContext = React.createContext({
     stocks: stockIterableTypeHelp,
+    addStock: (stock: IStockDTO) => { },
+    updateStock: (stock: IStockDTO) => { },
+    removeStock: (id: string) => { },
+
     getStocksByParentCategoryId: (parentCategoryId: number): IStockDTO[] => { return [] },
     getStockById: (stockId: string): IStockDTO => {
         return {
@@ -20,9 +25,7 @@ const StockContext = React.createContext({
             durable: 'string',
         }
     },
-    updateStock: (stock: IStockDTO) => { },
-    addStock: (stock: IStockDTO) => { },
-    removeStock: (id: string) => { }
+    calculateCapacityByCategory: (category: ICategoryDTO): number => 0,
 })
 
 export default StockContext
