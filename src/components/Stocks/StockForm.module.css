@@ -1,0 +1,13 @@
+.stock-form {
+    background-color: inherit;
+}
+
+.stock-form .col1 {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+}
+
+.stock-form .col1>div {
+    flex-grow: 1
+}

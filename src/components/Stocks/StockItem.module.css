@@ -1,32 +1,48 @@
 .stock-item {
-    border-radius: 3px;
-    margin: 25px 0;
+    margin: 10px 0;
     position: relative;
+    border-radius: 5px;
 }
 
 .stock-item a {
     text-decoration: none;
-    padding: 15px;
-    background-color: #fff;
-    color: #000;
+    padding: 10px 15px;
     display: block;
     cursor: pointer;
 }
 
-.stock-item .category,
-.stock-item .meta {
-    color: #616060
+.stock-item .data h3 {
+    margin: 8px 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.stock-item .meta {
+.stock-item .data span {
+    display: block;
     font-size: 0.7rem;
 }
 
-.stock-item .actions {
+.stock-item .category,
+.stock-item .meta {
+    color: #616060;
+}
+
+.stock-item .meta {
     position: absolute;
-    right: 0;
-    top: 0;
-    height: 100%;
-    width: 20%;
-    min-width: 100px;
+    bottom: 10px;
+    right: 10px;
+}
+
+.stock-item .meta span {
+    display: block;
+    font-size: 0.5rem;
+    text-align: right;
+}
+
+.stock-item .id {
+    position: absolute;
+    right: 5px;
+    font-size: 0.4rem;
+    top: 5px;
 }

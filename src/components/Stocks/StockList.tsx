@@ -1,10 +1,13 @@
-import IStock from "../../common/Stock"
-import AvailableStocks from "./AvailableStocks"
+import IStockDTO from "../../common/dto/StockDTOs"
 import StockItem from "./StockItem"
 import classes from './StockList.module.css'
 
-const StockList = () => {
-    const availableStocks = AvailableStocks().map((stock: IStock) => {
+interface StockListProps {
+    items: IStockDTO[]
+}
+
+const StockList = (props: StockListProps) => {
+    const availableStocks = props.items.map((stock: IStockDTO) => {
         return <StockItem
             key={stock.id}
             item={stock} />

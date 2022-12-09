@@ -1,15 +1,20 @@
 import { Fragment } from "react"
-import { useParams } from "react-router-dom"
-import BackButton from "../../components/UI/BackButton"
+import { useLoaderData } from "react-router-dom"
+import { fetchCategoryTree } from "../../api/category"
+import { ICategoryTree } from "../../common/dto/CategoryDTOs"
+import UpdateStockForm from "../../components/Stocks/Update/UpdateStockForm"
 import Container from "../../components/UI/Container"
 
+export const loader = async (data: any) => {
+    return fetchCategoryTree()
+}
+
 const StockByIdPage = () => {
-    const params = useParams()
+    const data = useLoaderData() as ICategoryTree[]
 
     return <Fragment>
         <Container>
-            <h1>Stock by ID page: {params.id}</h1>
-            <BackButton />
+            <UpdateStockForm categoryTree={data} />
         </Container>
     </Fragment>
 }

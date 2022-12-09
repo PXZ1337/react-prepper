@@ -2,7 +2,11 @@
 .category {
     text-align: left;
     height: 33%;
+    font-size: 0.8rem;
     font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .goal {
@@ -11,17 +15,13 @@
     font-weight: bold;
 }
 
-.critical {
-    background-color: red;
-    border-color: red;
+.icon {
+    position: absolute;
+    top: 7px;
+    right: 5px;
 }
 
-.warning {
-    background-color: rgb(196, 137, 8);
-    border-color: rgb(196, 137, 8);
-}
-
-.reached {
-    background-color: green;
-    border-color: green;
+.icon svg {
+    height: 35px;
+    width: 35px;
 }

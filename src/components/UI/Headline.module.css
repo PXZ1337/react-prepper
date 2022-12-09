@@ -1,0 +1,23 @@
+.headline {
+    padding: 5px 0;
+    border-bottom: 1px solid #fff;
+    margin-bottom: 15px;
+}
+
+.headline span {
+    font-weight: bold;
+    display: block;
+}
+
+.headline .primary {
+    font-size: 1.4rem;
+}
+
+.headline .secondary {
+    font-size: 1.2rem;
+}
+
+.headline .caption {
+    font-size: 0.8rem;
+    padding: 5px 0;
+}

@@ -1,17 +1,34 @@
-import { ICategory } from "../../common/Category"
+import { useContext } from "react"
+import { ICategoryDTO } from "../../common/dto/CategoryDTOs"
+import IStockDTO from "../../common/dto/StockDTOs"
+import StockContext from "../../store/Stock/stock-context"
 import GridCointainer from "../UI/GridContainer"
-import AvailableCategories from "./AvailableCategories"
 import CategoryGridItem from "./CategoryGridItem"
 
-const CategoryList = () => {
-    const availableCategories = AvailableCategories().map((category: ICategory) => {
-        const randomStock = Math.round(Math.random() * category.goal)
+interface CategoryListProps {
+    items: ICategoryDTO[]
+}
+
+const CategoryList = (props: CategoryListProps) => {
+    const context = useContext(StockContext)
+
+    const groupBy = (list: any[], col: string) => {
+        return list.reduce((grouped, stock) => {
+            !grouped[stock[col]] ? grouped[stock[col]] = [stock] : grouped[stock[col]].push(stock)
+            return grouped
+        }, {})
+    }
+
+    const availableCategories = props.items.map((category: ICategoryDTO) => {
+        const stockList = context.getStocksByParentCategoryId(category.id)
+        const stockCapacity = stockList.reduce((previousValue, currentValue) => previousValue + currentValue.abs, 0)
+        console.log(groupBy(stockList, 'categoryId'))
 
         return <CategoryGridItem
             key={category.id}
             id={category.id}
             name={category.name}
-            stock={randomStock}
+            stock={stockCapacity}
             goal={category.goal}
             unit={category.unit} />
     })

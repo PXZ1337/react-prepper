@@ -5,9 +5,83 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  height: 100%;
+}
+
+html {
+  height: 100%;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+#root {
+  height: 100%;
+}
+
+a {
+  text-decoration: none;
+  color: #fff;
+}
+
+input,
+select {
+  appearance: none;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+}
+
+/* Color Theme */
+.primary {
+  background-color: #0049B7 !important;
+  border-color: #0049B7 !important;
+  color: #fff !important;
+}
+
+.font-primary {
+  color: #0049B7;
+}
+
+.dark {
+  background-color: #494D5F;
+  border-color: #494D5F;
+}
+
+.font-dark {
+  color: #494D5F;
+}
+
+.color1 {
+  background-color: #ff1d58 !important;
+  border-color: #ff1d58 !important;
+  color: #fff !important;
+}
+
+.invalid-form-field {
+  border-color: #ff1d58 !important;
+  color: #ff1d58 !important;
+}
+
+.color3 {
+  background-color: #fff685 !important;
+  border-color: #fff685 !important;
+  color: #494D5F !important;
+}
+
+.color4 {
+  background-color: #3c893f !important;
+  border-color: #3c893f !important;
+  color: #fff !important;
+}
+
+.color6 {
+  background-color: #fff !important;
+  border-color: #fff !important;
+  color: #fff !important;
 }

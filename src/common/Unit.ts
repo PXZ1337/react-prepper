@@ -2,7 +2,7 @@ enum Unit {
     L = 'L',
     G = 'G',
     KG = 'KG',
-    ITEMS = 'Items'
+    items = 'items'
 }
 
 export default Unit

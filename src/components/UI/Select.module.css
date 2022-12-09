@@ -1,0 +1,30 @@
+.select {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 10px 0;
+}
+
+.select label {
+    font-weight: bold;
+    padding: 6px 0;
+}
+
+.select select {
+    width: 100%;
+    padding: 10px 15px;
+    font-size: 0.8rem;
+    border-radius: 3px;
+    border: 1px solid #efefef;
+    outline: none;
+}
+
+.select input:read-only {
+    opacity: 0.5;
+}
+
+.select input:focus,
+.select input:enabled,
+.select input:active {
+    outline: none;
+    border: 0 none
+}

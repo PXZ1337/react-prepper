@@ -1,28 +1,24 @@
 import { Link } from 'react-router-dom'
-import IStock from '../../common/Stock'
+import { formatUnit } from '../../common/Format'
+import IStockDTO from '../../common/dto/StockDTOs'
 import { getByIdRoute, Routes } from '../../Router'
-import Button from '../UI/Button'
 import classes from './StockItem.module.css'
 
 interface StockItemProps {
-    item: IStock
+    item: IStockDTO
 }
 const StockItem = (props: StockItemProps) => {
-    return <div className={classes['stock-item']}>
-        <Link to={getByIdRoute(Routes.STOCK_BY_ID, props.item.id)}>
-            <div>
-                <span className={classes.category}>{props.item.category}</span>
-                <h3>{props.item.name} ({props.item.abs} {props.item.unit})</h3>
-                <p>Menge: {props.item.stock}x{props.item.capacity} {props.item.unit}</p>
+    return <div className={`${classes['stock-item']} color6`}>
+        <Link className="font-dark" to={getByIdRoute(Routes.STOCK_BY_ID, props.item.id)}>
+            <span className={classes.id}>{props.item.id}</span>
+            <div className={classes.data}>
+                <span className={classes.category}>{props.item.categoryName}</span>
+                <h3>{props.item.name}</h3>
+                <span>Menge: {props.item.stock} x {formatUnit(props.item.capacity, props.item.unit)}, Gesamt: {formatUnit(props.item.abs, props.item.unit)}</span>
             </div>
             <div className={classes.meta}>
-                <span>Last updated {props.item.dateModified.toLocaleString()}</span><br />
-                <span>Durable: {props.item.durable.toLocaleString()}</span>
-            </div>
-            <div className={classes.actions}>
-                <Button onClickHandler={() => { }}>Edit</Button>
-                <Button onClickHandler={() => { }}>+</Button>
-                <Button onClickHandler={() => { }}>-</Button>
+                <span>Ablaufdatum: {new Date(props.item.durable).toLocaleDateString()}</span>
+                <span>Zuletzt aktualisiert {new Date(props.item.dateModified).toLocaleDateString()}</span>
             </div>
         </Link>
     </div>
