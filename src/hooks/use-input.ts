@@ -2,10 +2,10 @@ import { BaseSyntheticEvent, useReducer } from 'react';
 import { initialInputState, InputActionType } from '../store/InputState/InputAction';
 import inputStateReducer from '../store/InputState/InputStateReducer';
 
-const useInput = (validateValue: (value: any) => boolean, initialValue?: any) => {
+const useInput = (validateValue: (value: any) => boolean, initialValue: any) => {
     const [inputState, dispatch] = useReducer(
         inputStateReducer,
-        { ...initialInputState, value: initialValue ? initialValue : '' }
+        { ...initialInputState, value: initialValue }
 
     );
 

@@ -40,7 +40,7 @@ const CategoryByIdPage = () => {
                 <StockList items={filtered} />
             </ContentCard>
         </Container>
-    </Fragment>
+    </Fragment >
 }
 
 export default CategoryByIdPage

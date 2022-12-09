@@ -30,7 +30,7 @@ const UpdateStockForm = (props: AddStockFormProps) => {
 
     return <Fragment>
         <Headline type={HeadlineType.PRIMARY} caption={`"${stock.name}" bearbeiten`}>Aktualisieren</Headline>
-        <StockForm onSubmitHandler={onSubmitHandler} categoryTree={props.categoryTree} stock={stock} />
+        <StockForm onSubmitHandler={onSubmitHandler} categoryTree={props.categoryTree} initialValue={stock} />
     </Fragment>
 }
 

@@ -18,11 +18,12 @@ import classes from "./StockForm.module.css"
 interface StockFormProps {
     onSubmitHandler: (stock: IStockInputDTO) => void
     categoryTree: ICategoryTree[],
-    stock?: IStockInputDTO
+    initialValue: IStockInputDTO
 }
 
 const StockForm = (props: StockFormProps) => {
     const categoryRef = useRef<HTMLSelectElement>(null)
+
     const navigate = useNavigate()
 
     const [isSubmitError, setIsSubmitError] = useState(false)
@@ -34,7 +35,7 @@ const StockForm = (props: StockFormProps) => {
         isValid: nameIsValid,
         inputBlurHandler: nameBlurHandler,
         valueChangeHandler: nameChangeHandler
-    } = useInput(NotEmpty, props.stock ? props.stock.name : null)
+    } = useInput(NotEmpty, props.initialValue.name)
 
     const {
         value: unitValue,
@@ -42,7 +43,7 @@ const StockForm = (props: StockFormProps) => {
         isValid: unitIsValid,
         inputBlurHandler: unitBlurHandler,
         valueChangeHandler: unitChangeHandler
-    } = useInput(ValidUnit, props.stock ? props.stock.unit : null)
+    } = useInput(ValidUnit, props.initialValue.unit)
 
     const {
         value: stockValue,
@@ -50,7 +51,7 @@ const StockForm = (props: StockFormProps) => {
         isValid: stockIsValid,
         inputBlurHandler: stockBlurHandler,
         valueChangeHandler: stockChangeHandler
-    } = useInput((value: number) => ValueBetween(value, 1, 10000), props.stock ? props.stock.stock : null)
+    } = useInput((value: number) => ValueBetween(value, 1, 10000), props.initialValue.stock)
 
     const {
         value: capacityValue,
@@ -58,7 +59,7 @@ const StockForm = (props: StockFormProps) => {
         isValid: capacityIsValid,
         inputBlurHandler: capacityBlurHandler,
         valueChangeHandler: capacityChangeHandler
-    } = useInput((value: number) => ValueBetween(value, 1, 10000), props.stock ? props.stock.capacity : null)
+    } = useInput((value: number) => ValueBetween(value, 1, 10000), props.initialValue.capacity)
 
     const {
         value: expiryValue,
@@ -68,7 +69,7 @@ const StockForm = (props: StockFormProps) => {
         valueChangeHandler: expiryChangeHandler
     } = useInput((dateString: string) => {
         return !isNaN(Date.parse(dateString))
-    }, props.stock ? props.stock.durable : null)
+    }, props.initialValue.durable)
 
     let formIsValid = nameIsValid && unitIsValid && stockIsValid && capacityIsValid && expiryIsValid && categoryRef.current && ValidCategory(categoryRef.current.value)
 
@@ -96,14 +97,6 @@ const StockForm = (props: StockFormProps) => {
         })
 
         return selectOptGroups
-    }
-
-    const getCategoryPreSelection = () => {
-        if (props.stock) {
-            return `${props.stock.parentCategoryId}__${props.stock.categoryId}`
-        }
-
-        return '0__0'
     }
 
     const onSubmitHandler = async (event: BaseSyntheticEvent) => {
@@ -176,7 +169,7 @@ const StockForm = (props: StockFormProps) => {
                 selectHasErrors={categoryRef.current && !ValidCategory(categoryRef.current.value) ? true : false}
                 onChangeHandler={onCategoryChangeHandler}
                 selectProps={{
-                    defaultValue: getCategoryPreSelection()
+                    defaultValue: `${props.initialValue.parentCategoryId}__${props.initialValue.categoryId}`
                 }} items={buildNestedCategorySelect()} ref={categoryRef} />
 
             <Input
@@ -265,7 +258,7 @@ const StockForm = (props: StockFormProps) => {
 
         <ButtonCard>
             <Button buttonType={ButtonType.BACK} onClickHandler={() => navigate(-1)}>ABBRECHEN</Button>
-            <Button buttonType={formIsValid ? ButtonType.PRIMARY : ButtonType.DISABLED} buttonProps={{ type: "submit" }}>{props.stock ? 'ÄNDERN' : 'ERSTELLEN'}</Button>
+            <Button buttonType={formIsValid ? ButtonType.PRIMARY : ButtonType.DISABLED} buttonProps={{ type: "submit" }}>{props.initialValue ? 'ÄNDERN' : 'ERSTELLEN'}</Button>
         </ButtonCard>
     </form>
 }

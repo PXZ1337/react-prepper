@@ -14,6 +14,21 @@ interface AddStockFormProps {
 const AddStockForm = (props: AddStockFormProps) => {
     const navigte = useNavigate()
     const context = useContext(StockContext)
+    const now = new Date()
+    const future = new Date(`${now.getFullYear() + 1}-${now.getMonth() + 1}-01`)
+
+    const initialFormValues = {
+        name: '',
+        stock: 1,
+        capacity: 1,
+        abs: 0,
+        parentCategoryId: 0,
+        categoryName: '',
+        categoryId: 0,
+        unit: '',
+        dateModified: '',
+        durable: future.toISOString().substring(0, 10)
+    }
 
     const onSubmitHandler = async (stock: IStockInputDTO) => {
         const newStock = await createStock(stock)
@@ -21,7 +36,7 @@ const AddStockForm = (props: AddStockFormProps) => {
         navigte(getByIdRoute(Routes.CATEGORY_BY_ID, stock.parentCategoryId.toString()))
     }
 
-    return <StockForm onSubmitHandler={onSubmitHandler} categoryTree={props.categoryTree} />
+    return <StockForm onSubmitHandler={onSubmitHandler} categoryTree={props.categoryTree} initialValue={initialFormValues} />
 }
 
 export default AddStockForm
