@@ -1,26 +1,17 @@
-import { Fragment, Suspense } from "react";
-import { Await, defer, useLoaderData, useNavigate } from "react-router-dom";
-import { fetchCategories } from "../api/category";
-import { ICategoryDTO } from "../common/dto/CategoryDTOs";
+import { Fragment, Suspense, useContext } from "react";
+import { Await, useNavigate } from "react-router-dom";
 import CategoryList from "../components/Categories/CategoryList";
 import Button, { ButtonType } from "../components/UI/Button";
 import Container from "../components/UI/Container";
 import Headline, { HeadlineType } from "../components/UI/Headline";
 import Loader from "../components/UI/Loader/Loader";
 import { Routes } from "../Router";
+import CategoryContext from "../store/Category/category-context";
 import ErrorBoundery from "./ErrorBoundery";
 
-interface DashboardPageResponseDTO {
-    categories: ICategoryDTO[]
-}
-
-export const loader = async () => {
-    return defer({ categories: fetchCategories() })
-}
-
 const DashboardPage = () => {
-    const data = useLoaderData() as DashboardPageResponseDTO
     const navigate = useNavigate()
+    const context = useContext(CategoryContext)
 
     return (
         <Fragment>
@@ -32,7 +23,7 @@ const DashboardPage = () => {
             </Container>
             <Suspense fallback={<Loader>lade Kategorien ...</Loader>}>
                 <Await
-                    resolve={data.categories}
+                    resolve={context.categories}
                     errorElement={<ErrorBoundery />}
                     children={(categories) => (
                         <CategoryList items={categories} />

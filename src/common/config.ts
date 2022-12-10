@@ -8,7 +8,7 @@ interface IConfig {
 }
 
 const config: IConfig = {
-    backendBaseUrl: `${FirebaseConfig.databaseURL}/prepper`,
+    backendBaseUrl: `${FirebaseConfig.databaseURL}/staging`,
 }
 
 export default config

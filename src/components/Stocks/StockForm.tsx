@@ -1,6 +1,5 @@
-import { BaseSyntheticEvent, useRef, useState } from "react"
+import { BaseSyntheticEvent, useContext, useRef, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { getCategoryById } from "../../api/category"
 import { ICategoryTree, ICategoryTreeNode, ICategoryDTO } from "../../common/dto/CategoryDTOs"
 import { IStockInputDTO } from "../../common/dto/StockDTOs"
 import NotEmpty from "../../common/validation/NotEmpty"
@@ -8,6 +7,7 @@ import ValidCategory from "../../common/validation/ValidCategory"
 import ValidUnit from "../../common/validation/ValidUnit"
 import ValueBetween from "../../common/validation/ValueBetween"
 import useInput from "../../hooks/use-input"
+import CategoryContext from "../../store/Category/category-context"
 import Button, { ButtonType } from "../UI/Button"
 import ButtonCard from "../UI/ButtonCard"
 import ContentCard from "../UI/ContentCard"
@@ -17,7 +17,6 @@ import classes from "./StockForm.module.css"
 
 interface StockFormProps {
     onSubmitHandler: (stock: IStockInputDTO) => void
-    categoryTree: ICategoryTree[],
     initialValue: IStockInputDTO
 }
 
@@ -25,6 +24,7 @@ const StockForm = (props: StockFormProps) => {
     const categoryRef = useRef<HTMLSelectElement>(null)
 
     const navigate = useNavigate()
+    const categoryContext = useContext(CategoryContext)
 
     const [isSubmitError, setIsSubmitError] = useState(false)
     const [submitError, setSubmitError] = useState('')
@@ -59,7 +59,7 @@ const StockForm = (props: StockFormProps) => {
         isValid: capacityIsValid,
         inputBlurHandler: capacityBlurHandler,
         valueChangeHandler: capacityChangeHandler
-    } = useInput((value: number) => ValueBetween(value, 1, 10000), props.initialValue.capacity)
+    } = useInput((value: number) => ValueBetween(value, 0.01, 10000), props.initialValue.capacity)
 
     const {
         value: expiryValue,
@@ -74,7 +74,7 @@ const StockForm = (props: StockFormProps) => {
     let formIsValid = nameIsValid && unitIsValid && stockIsValid && capacityIsValid && expiryIsValid && categoryRef.current && ValidCategory(categoryRef.current.value)
 
     const buildNestedCategorySelect = () => {
-        const selectOptGroups = props.categoryTree.map((tree: ICategoryTree) => {
+        const selectOptGroups = categoryContext.categoryTree.map((tree: ICategoryTree) => {
             return {
                 value: tree.id.toString(),
                 label: tree.name,
@@ -105,12 +105,15 @@ const StockForm = (props: StockFormProps) => {
         if (formIsValid && categoryRef.current !== null) {
             const [parentCategoryId, subCategoryId] = categoryRef.current.value.split('__')
 
+            const stock = parseInt(stockValue)
+            const capacity = parseFloat(`${capacityValue}`.replace(',', '.'))
+
             try {
                 await props.onSubmitHandler({
                     name: nameValue,
-                    stock: parseInt(stockValue),
-                    capacity: parseInt(capacityValue),
-                    abs: parseInt(stockValue) * parseInt(capacityValue),
+                    stock: stock,
+                    capacity: capacity,
+                    abs: stock * capacity,
                     parentCategoryId: parseInt(parentCategoryId),
                     categoryName: categoryRef.current.options[categoryRef.current.selectedIndex].text,
                     categoryId: parseInt(subCategoryId),
@@ -125,17 +128,17 @@ const StockForm = (props: StockFormProps) => {
         }
     }
 
-    const onCategoryChangeHandler = async (event: BaseSyntheticEvent) => {
+    const onCategoryChangeHandler = (event: BaseSyntheticEvent) => {
         const [mainCategoryId,] = event.target.value.split('__');
 
         if (mainCategoryId === '') {
-            unitChangeHandler(undefined, '')
+            unitChangeHandler(undefined, 'INVALID MAIN_CATEGORY')
             return
         }
 
-        const category: ICategoryDTO = await getCategoryById(mainCategoryId)
-        if (!category.unit) {
-            unitChangeHandler(undefined, '')
+        const category: ICategoryDTO = categoryContext.getCategoryById((+mainCategoryId))
+        if (!category || !category.unit) {
+            unitChangeHandler(undefined, 'INVALID UNIT')
             return
         }
 
@@ -154,7 +157,8 @@ const StockForm = (props: StockFormProps) => {
                 placeholder: 'Bezeichnung eingeben',
                 value: nameValue,
                 onBlur: nameBlurHandler,
-                onChange: nameChangeHandler
+                onChange: nameChangeHandler,
+                onFocus: (event: BaseSyntheticEvent) => event.target.select()
             }}
             noticeProps={{
                 show: true,
@@ -201,7 +205,8 @@ const StockForm = (props: StockFormProps) => {
                     placeholder: 'Bestand',
                     value: stockValue,
                     onBlur: stockBlurHandler,
-                    onChange: stockChangeHandler
+                    onChange: stockChangeHandler,
+                    onFocus: (event: BaseSyntheticEvent) => event.target.select()
                 }}
                 noticeProps={{
                     show: true,
@@ -213,11 +218,13 @@ const StockForm = (props: StockFormProps) => {
                 inputHasErrors={capacityHasError}
                 inputProps={{
                     type: 'numeric',
+                    step: "0.10",
                     required: true,
                     placeholder: 'Kapazität',
                     value: capacityValue,
                     onBlur: capacityBlurHandler,
-                    onChange: capacityChangeHandler
+                    onChange: capacityChangeHandler,
+                    onFocus: (event: BaseSyntheticEvent) => event.target.select()
                 }}
                 noticeProps={{
                     show: true,
@@ -232,7 +239,7 @@ const StockForm = (props: StockFormProps) => {
                     readOnly: true,
                     required: true,
                     placeholder: 'Gesamtkapazität',
-                    value: (stockValue * capacityValue).toFixed()
+                    value: (parseInt(stockValue) * parseFloat(`${capacityValue}`.replace(',', '.'))).toFixed(2)
                 }}
                 noticeProps={{ show: false, text: '' }} />
         </div>
@@ -247,7 +254,8 @@ const StockForm = (props: StockFormProps) => {
                 placeholder: 'Ablaufdatum',
                 value: expiryValue,
                 onBlur: expiryBlurHandler,
-                onChange: expiryChangeHandler
+                onChange: expiryChangeHandler,
+                onFocus: (event: BaseSyntheticEvent) => event.target.select()
             }}
             noticeProps={{
                 show: true,
@@ -258,7 +266,7 @@ const StockForm = (props: StockFormProps) => {
 
         <ButtonCard>
             <Button buttonType={ButtonType.BACK} onClickHandler={() => navigate(-1)}>ABBRECHEN</Button>
-            <Button buttonType={formIsValid ? ButtonType.PRIMARY : ButtonType.DISABLED} buttonProps={{ type: "submit" }}>{props.initialValue ? 'ÄNDERN' : 'ERSTELLEN'}</Button>
+            <Button buttonType={formIsValid ? ButtonType.PRIMARY : ButtonType.DISABLED} buttonProps={{ type: "submit" }}>{props.initialValue.name ? 'ÄNDERN' : 'ERSTELLEN'}</Button>
         </ButtonCard>
     </form>
 }

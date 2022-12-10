@@ -14,5 +14,7 @@
 .header .inner {
     padding: 1.5rem;
     color: inherit;
+    display: flex;
+    align-items: baseline;
     flex-grow: 2;
 }
