@@ -1,8 +1,8 @@
 import { createBrowserRouter } from "react-router-dom";
 import App, { loader as appDataLoader } from "./App";
+import ErrorBoundaryContainer from "./components/ErrorBoundary/ErrorBoundaryContainer";
 import CategoryByIdPage from "./pages/category/CategoryByIdPage";
 import Dashboard from "./pages/DashboardPage";
-import ErrorBoundery from "./pages/ErrorBoundery";
 import StockAdd from "./pages/stock/StockAddPage";
 import StockByIdPage from "./pages/stock/StockByIdPage";
 
@@ -22,7 +22,7 @@ const router = createBrowserRouter([
         path: Routes.DASHBOARD,
         element: <App />,
         loader: appDataLoader,
-        errorElement: <ErrorBoundery />,
+        errorElement: <ErrorBoundaryContainer />,
         children: [
             {
                 index: true,
@@ -39,9 +39,9 @@ const router = createBrowserRouter([
             {
                 path: Routes.ADD_STOCK,
                 element: <StockAdd />,
-            },
+            }
         ]
-    },
+    }
 ], {
     basename: "/prepper"
 });

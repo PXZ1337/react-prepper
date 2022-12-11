@@ -1,5 +1,5 @@
 import React from 'react'
-import { ICategoryDTO } from '../../common/dto/CategoryDTOs'
+import { ICategoryData, ICategoryDTO } from '../../common/dto/CategoryDTOs'
 import Unit from '../../common/Unit'
 import { categoryIterableTypeHelp, categoryTreeTypeHelp, subCategoryIterableTypeHelp } from './CategoryAction'
 
@@ -20,6 +20,8 @@ const CategoryContext = React.createContext({
             goal: 0
         }
     },
+
+    updateState: (categoryData: ICategoryData) => { }
 })
 
 export default CategoryContext

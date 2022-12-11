@@ -35,6 +35,8 @@ const CategoryReducer = (state: ICategoryState, action: CategoryAction): ICatego
                 subCategories: state.subCategories,
                 categoryTree: state.categoryTree
             }
+        case CategoryActionType.UPDATE_STATE:
+            return action.payload
         default:
             return defaultState
     }

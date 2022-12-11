@@ -14,8 +14,13 @@ export const defaultState = {
     categoryTree: categoryTreeTypeHelp
 }
 
+
 export enum CategoryActionType {
-    ADD, UPDATE, DELETE, CALCULATE_TREE
+    ADD,
+    UPDATE,
+    DELETE,
+    CALCULATE_TREE,
+    UPDATE_STATE
 }
 
 export interface ICategoryState {

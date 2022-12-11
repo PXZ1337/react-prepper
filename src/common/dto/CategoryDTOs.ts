@@ -23,3 +23,8 @@ export interface ICategoryTreeNode {
     id: number,
     name: string,
 }
+
+export interface ICategoryData {
+    categories: ICategoryDTO[],
+    subCategories: ISubCategoryDTO[]
+}

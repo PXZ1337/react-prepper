@@ -6,7 +6,7 @@ export const defaultStockState = {
 }
 
 export enum StockActionType {
-    ADD, UPDATE, REDUCE
+    ADD, UPDATE, REDUCE, UPDATE_STATE
 }
 
 export interface IStockState {

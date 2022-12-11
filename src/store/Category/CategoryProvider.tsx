@@ -1,18 +1,17 @@
 import { useReducer } from "react"
-import { ICategoryDTO, ISubCategoryDTO } from "../../common/dto/CategoryDTOs"
+import { ICategoryData, ICategoryDTO, ISubCategoryDTO } from "../../common/dto/CategoryDTOs"
 import CategoryContext from "./category-context"
 import { CategoryActionType } from "./CategoryAction"
 import CategoryReducer from "./CategoryReducer"
 
 interface CategoryProviderProps {
-    categories: ICategoryDTO[]
-    subCategories: ISubCategoryDTO[]
+    categoryData: ICategoryData
     children: any
 }
 
-const calculateCategoryTree = (props: CategoryProviderProps) => {
+const calculateCategoryTree = (categoryData: ICategoryData) => {
     let subCategoryMap = new Map<number, ISubCategoryDTO[]>()
-    props.subCategories.forEach((subCategory) => {
+    categoryData.subCategories.forEach((subCategory) => {
         const collection = subCategoryMap.get(subCategory.parent);
         if (!collection) {
             subCategoryMap.set(subCategory.parent, [subCategory]);
@@ -21,7 +20,7 @@ const calculateCategoryTree = (props: CategoryProviderProps) => {
         }
     });
 
-    return props.categories.map((category: ICategoryDTO) => {
+    return categoryData.categories.map((category: ICategoryDTO) => {
         let subCategories: ISubCategoryDTO[] = []
 
         if (subCategoryMap.has(category.id)) {
@@ -41,9 +40,9 @@ const calculateCategoryTree = (props: CategoryProviderProps) => {
 
 const CategoryProvider = (props: CategoryProviderProps) => {
     const [categoryState, dispatchCategoryAction] = useReducer(CategoryReducer, {
-        categories: props.categories,
-        subCategories: props.subCategories,
-        categoryTree: calculateCategoryTree(props)
+        categories: props.categoryData.categories,
+        subCategories: props.categoryData.subCategories,
+        categoryTree: calculateCategoryTree(props.categoryData)
     })
 
     const addCategory = (category: ICategoryDTO) => dispatchCategoryAction({ type: CategoryActionType.ADD, payload: category })
@@ -51,6 +50,16 @@ const CategoryProvider = (props: CategoryProviderProps) => {
     const removeCategory = (id: number) => dispatchCategoryAction({ type: CategoryActionType.DELETE, payload: { id: id } })
 
     const getCategoryById = (id: number): ICategoryDTO => categoryState.categories.filter((category: ICategoryDTO) => category.id === id)[0]
+
+    const updateState = async (categoryData: ICategoryData) => {
+        dispatchCategoryAction({
+            type: CategoryActionType.UPDATE_STATE, payload: {
+                ...categoryData,
+                categoryTree: calculateCategoryTree(categoryData)
+            }
+        })
+    }
+
 
     const contextProps = {
         categories: categoryState.categories,
@@ -60,7 +69,9 @@ const CategoryProvider = (props: CategoryProviderProps) => {
         addCategory,
         updateCategory,
         removeCategory,
-        getCategoryById
+        getCategoryById,
+
+        updateState
     }
 
     return <CategoryContext.Provider value={contextProps}>

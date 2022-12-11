@@ -2,6 +2,7 @@ import { BaseSyntheticEvent, useContext, useRef, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { ICategoryTree, ICategoryTreeNode, ICategoryDTO } from "../../common/dto/CategoryDTOs"
 import { IStockInputDTO } from "../../common/dto/StockDTOs"
+import { extractMessageFromError } from "../../common/Utils"
 import NotEmpty from "../../common/validation/NotEmpty"
 import ValidCategory from "../../common/validation/ValidCategory"
 import ValidUnit from "../../common/validation/ValidUnit"
@@ -121,9 +122,9 @@ const StockForm = (props: StockFormProps) => {
                     dateModified: new Date().toISOString(),
                     durable: expiryValue.toString(),
                 })
-            } catch (error) {
+            } catch (e) {
                 setIsSubmitError(true)
-                setSubmitError(`${error}`)
+                setSubmitError(extractMessageFromError(e))
             }
         }
     }

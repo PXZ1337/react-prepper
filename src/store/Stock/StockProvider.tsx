@@ -1,11 +1,11 @@
 import { useReducer } from "react"
-import StockContext from "./stock-context"
-import IStockDTO from "../../common/dto/StockDTOs"
-import { StockActionType } from "./StockAction"
-import StockReducer from "./StockReducer"
 import { ICategoryDTO } from "../../common/dto/CategoryDTOs"
+import IStockDTO from "../../common/dto/StockDTOs"
 import Unit from "../../common/Unit"
 import { groupBy } from "../../common/Utils"
+import StockContext from "./stock-context"
+import { StockActionType } from "./StockAction"
+import StockReducer from "./StockReducer"
 
 interface StockProviderProps {
     stocks: IStockDTO[]
@@ -37,6 +37,10 @@ const StockProvider = (props: StockProviderProps) => {
         return stockCapacity
     }
 
+    const updateState = async (stocks: IStockDTO[]) => {
+        dispatchStockAction({ type: StockActionType.UPDATE_STATE, payload: stocks })
+    }
+
     const contextProps = {
         stocks: stockState.stocks,
         addStock,
@@ -45,7 +49,9 @@ const StockProvider = (props: StockProviderProps) => {
 
         getStocksByParentCategoryId,
         getStockById,
-        calculateCapacityByCategory
+        calculateCapacityByCategory,
+
+        updateState
     }
 
     return <StockContext.Provider value={contextProps}>

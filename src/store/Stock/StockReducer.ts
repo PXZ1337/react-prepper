@@ -42,6 +42,10 @@ const StockReducer = (state: IStockState, action: StockAction): IStockState => {
             return {
                 stocks: updatedStocks
             }
+        case StockActionType.UPDATE_STATE:
+            return {
+                stocks: action.payload
+            }
         default:
             return defaultStockState
     }

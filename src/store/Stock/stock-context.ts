@@ -26,6 +26,7 @@ const StockContext = React.createContext({
         }
     },
     calculateCapacityByCategory: (category: ICategoryDTO): number => 0,
+    updateState: (stocks: IStockDTO[]) => { }
 })
 
 export default StockContext

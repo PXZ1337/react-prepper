@@ -1,0 +1,9 @@
+.error {
+    text-align: center;
+}
+
+.error .caption {
+    padding: 5px 0;
+    border-bottom: 1px solid #fff;
+    margin-bottom: 15px;
+}
