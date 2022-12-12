@@ -17,7 +17,7 @@ const StockProvider = (props: StockProviderProps) => {
 
     const addStock = (stock: IStockDTO) => dispatchStockAction({ type: StockActionType.ADD, payload: stock })
     const updateStock = (stock: IStockDTO) => dispatchStockAction({ type: StockActionType.UPDATE, payload: stock })
-    const removeStock = (id: string) => dispatchStockAction({ type: StockActionType.REDUCE, payload: { id: id } })
+    const removeStock = (id: string) => dispatchStockAction({ type: StockActionType.REMOVE, payload: { id: id } })
 
     const getStocksByParentCategoryId = (parentCategoryId: number): IStockDTO[] => stockState.stocks.filter((stock: IStockDTO) => stock.parentCategoryId === parentCategoryId)
     const getStockById = (stockId: string): IStockDTO => stockState.stocks.filter((stock: IStockDTO) => stock.id === stockId)[0]

@@ -55,6 +55,12 @@ export const fetchStocks = async (): Promise<IStockDTO[]> => {
     return stocks
 }
 
+export const deleteStock = async (id: string): Promise<boolean> => {
+    return await addRequest(`${config.backendBaseUrl}/stocks/${id}.json`, {
+        method: 'DELETE'
+    })
+}
+
 export const fetchStockById = async (id: string): Promise<IStockDTO> => {
     const stock = await fetchRequest(`${config.backendBaseUrl}/stocks/${id}.json`)
     if (!stock) {

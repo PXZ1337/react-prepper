@@ -25,5 +25,20 @@ export interface IStockInputDTO {
     durable: string,
 }
 
+export const mapToStockInputDTO = (stockDTO: IStockDTO): IStockInputDTO => {
+    return {
+        name: stockDTO.name,
+        capacity: stockDTO.capacity,
+        stock: stockDTO.stock,
+        abs: stockDTO.abs,
+        parentCategoryId: stockDTO.parentCategoryId,
+        categoryName: stockDTO.categoryName,
+        categoryId: stockDTO.categoryId,
+        unit: stockDTO.unit,
+        dateModified: stockDTO.dateModified,
+        durable: stockDTO.durable,
+    }
+}
+
 
 export default IStockDTO

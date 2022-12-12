@@ -2,13 +2,15 @@
     margin: 10px 0;
     position: relative;
     border-radius: 5px;
+    display: flex;
 }
 
 .stock-item a {
     text-decoration: none;
     padding: 10px 15px;
-    display: block;
     cursor: pointer;
+    position: relative;
+    flex-grow: 2;
 }
 
 .stock-item .data h3 {
@@ -21,6 +23,10 @@
 .stock-item .data span {
     display: block;
     font-size: 0.7rem;
+}
+
+.stock-item .data span.amount {
+    display: inline-block;
 }
 
 .stock-item .category,
@@ -45,4 +51,16 @@
     right: 5px;
     font-size: 0.4rem;
     top: 5px;
+}
+
+.stock-item .increase,
+.stock-item .reduce {
+    cursor: pointer;
+    padding: 10px;
+}
+
+.stock-item .increase svg,
+.stock-item .reduce svg {
+    /*width: 100%;*/
+    height: 100%;
 }

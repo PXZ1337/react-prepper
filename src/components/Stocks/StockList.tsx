@@ -4,13 +4,18 @@ import classes from './StockList.module.css'
 
 interface StockListProps {
     items: IStockDTO[]
+    increaseStockHandler: (stockItem: IStockDTO) => void
+    reduceStockHandler: (stockItem: IStockDTO) => void
 }
 
 const StockList = (props: StockListProps) => {
     const availableStocks = props.items.map((stock: IStockDTO) => {
         return <StockItem
             key={stock.id}
-            item={stock} />
+            item={stock}
+            increaseStockHandler={props.increaseStockHandler}
+            reduceStockHandler={props.reduceStockHandler}
+        />
     })
     return <div className={classes['stock-list']}>
         {availableStocks}

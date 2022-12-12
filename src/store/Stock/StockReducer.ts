@@ -23,22 +23,14 @@ const StockReducer = (state: IStockState, action: StockAction): IStockState => {
                 return StockReducer(state, { type: StockActionType.ADD, payload: action.payload })
             }
 
-        case StockActionType.REDUCE:
-            const reduceI = state.stocks.findIndex((stock: IStockDTO) => stock.id === action.payload.id)
-            const reduceStock: IStockDTO = state.stocks[reduceI]
+        case StockActionType.REMOVE:
+            const removeI = state.stocks.findIndex((stock: IStockDTO) => stock.id === action.payload.id)
             let updatedStocks = [...state.stocks]
 
-            if (reduceStock) {
-                if (reduceStock.stock > 1) {
-                    const updatedStock = {
-                        ...reduceStock,
-                        stock: reduceStock.stock - 1
-                    }
-                    updatedStocks[reduceI] = updatedStock
-                } else {
-                    updatedStocks.splice(reduceI, 1)
-                }
+            if (removeI > -1) {
+                updatedStocks.splice(removeI, 1)
             }
+
             return {
                 stocks: updatedStocks
             }

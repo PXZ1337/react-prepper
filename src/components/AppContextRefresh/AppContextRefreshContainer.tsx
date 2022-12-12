@@ -1,7 +1,7 @@
-import { Fragment, useContext, useState } from "react"
+import { Fragment, useContext } from "react"
 import { fetchCategoryData } from "../../api/category"
 import { fetchStocks } from "../../api/stock"
-import { extractMessageFromError } from "../../common/Utils"
+import useHttp from "../../hooks/use-http"
 import CategoryContext from "../../store/Category/category-context"
 import StockContext from "../../store/Stock/stock-context"
 import ErrorBoundary from "../ErrorBoundary/ErrorBoundary"
@@ -14,31 +14,20 @@ interface AppContextContainerProps {
 }
 
 const AppContextRefreshContainer = (props: AppContextContainerProps) => {
-    const clickTimeout = 1000
-
-    const [isLoading, setIsLoading] = useState(false)
-    const [error, setError] = useState('')
-
     const stockContext = useContext(StockContext)
     const categoryContext = useContext(CategoryContext)
 
+    const { isLoading, error, sendRequest: reloadAppContext } = useHttp()
+
     const appRefreshHandler = async () => {
-        setIsLoading(true)
-        setError('')
+        if (!isLoading) {
+            reloadAppContext(async () => {
+                const stocks = await fetchStocks()
+                const categoryData = await fetchCategoryData()
 
-        try {
-            const stocks = await fetchStocks()
-            const categoryData = await fetchCategoryData()
-
-            stockContext.updateState(stocks)
-            categoryContext.updateState(categoryData)
-        } catch (e) {
-            setError(extractMessageFromError(e))
-        }
-        finally {
-            setTimeout(() => {
-                setIsLoading(false)
-            }, clickTimeout)
+                stockContext.updateState(stocks)
+                categoryContext.updateState(categoryData)
+            })
         }
     }
 
