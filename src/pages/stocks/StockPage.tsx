@@ -1,8 +1,8 @@
 import { useContext } from 'react';
 import IStockDTO from '../../common/dto/StockDTOs';
 import StockList from '../../components/Stocks/StockList';
-import Container from '../../components/UI/Container';
-import Headline, { HeadlineType } from '../../components/UI/Headline';
+import Container from '../../components/UI/Container/Container';
+import Headline, { HeadlineType } from '../../components/UI/Misc/Headline';
 import StockContext from '../../store/Stock/stock-context';
 
 const StockPage = () => {

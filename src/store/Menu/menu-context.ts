@@ -1,10 +1,8 @@
-import React, { Dispatch, SetStateAction } from "react"
-
-
+import React from 'react';
 
 const MenuContext = React.createContext({
     isVisible: false,
-    setIsVisible: (isVisible: boolean) => { }
-})
+    setIsVisible: (isVisible: boolean) => {},
+});
 
-export default MenuContext
+export default MenuContext;
