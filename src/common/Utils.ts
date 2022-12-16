@@ -22,3 +22,7 @@ export const extractMessageFromError = (e: any): string => {
 export const sleep = (time: number) => {
     return new Promise((resolve) => setTimeout(resolve, time));
 }
+
+export const calculateExpirationInDays = (durableDate: Date): number => {
+    return Math.round((durableDate.valueOf() - (new Date()).valueOf()) / (1000 * 60 * 60 * 24))
+}

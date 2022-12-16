@@ -5,10 +5,12 @@ import CategoryByIdPage from "./pages/category/CategoryByIdPage";
 import Dashboard from "./pages/DashboardPage";
 import StockAdd from "./pages/stock/StockAddPage";
 import StockByIdPage from "./pages/stock/StockByIdPage";
+import StockPage from "./pages/stocks/StockPage";
 
 export const Routes = {
     DASHBOARD: '/',
     CATEGORY_BY_ID: '/category/:id',
+    STOCKS: '/stocks',
     STOCK_BY_ID: '/stock/:id',
     ADD_STOCK: '/stock/add'
 }
@@ -31,6 +33,10 @@ const router = createBrowserRouter([
             {
                 path: Routes.CATEGORY_BY_ID,
                 element: <CategoryByIdPage />,
+            },
+            {
+                path: Routes.STOCKS,
+                element: <StockPage />,
             },
             {
                 path: Routes.STOCK_BY_ID,

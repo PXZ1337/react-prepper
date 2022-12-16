@@ -69,7 +69,7 @@ const StockForm = (props: StockFormProps) => {
         inputBlurHandler: expiryBlurHandler,
         valueChangeHandler: expiryChangeHandler
     } = useInput((dateString: string) => {
-        return !isNaN(Date.parse(dateString))
+        return !!(!isNaN(Date.parse(dateString)) || dateString === '' || !dateString)
     }, props.initialValue.durable)
 
     let formIsValid = nameIsValid && unitIsValid && stockIsValid && capacityIsValid && expiryIsValid && categoryRef.current && ValidCategory(categoryRef.current.value)
@@ -110,6 +110,7 @@ const StockForm = (props: StockFormProps) => {
             const capacity = parseFloat(`${capacityValue}`.replace(',', '.'))
 
             try {
+                console.log(expiryValue)
                 await props.onSubmitHandler({
                     name: nameValue,
                     stock: stock,
@@ -120,7 +121,7 @@ const StockForm = (props: StockFormProps) => {
                     categoryId: parseInt(subCategoryId),
                     unit: unitValue,
                     dateModified: new Date().toISOString(),
-                    durable: expiryValue.toString(),
+                    durable: expiryValue ? expiryValue.toString() : null,
                 })
             } catch (e) {
                 setIsSubmitError(true)
@@ -251,7 +252,6 @@ const StockForm = (props: StockFormProps) => {
             inputHasErrors={expiryHasError}
             inputProps={{
                 type: 'date',
-                required: true,
                 placeholder: 'Ablaufdatum',
                 value: expiryValue,
                 onBlur: expiryBlurHandler,

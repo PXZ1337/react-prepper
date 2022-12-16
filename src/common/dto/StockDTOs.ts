@@ -9,7 +9,7 @@ interface IStockDTO {
     categoryId: number,
     unit: string,
     dateModified: string,
-    durable: string,
+    durable?: string,
 }
 
 export interface IStockInputDTO {
@@ -22,7 +22,7 @@ export interface IStockInputDTO {
     categoryId: number,
     unit: string,
     dateModified: string,
-    durable: string,
+    durable?: string,
 }
 
 export const mapToStockInputDTO = (stockDTO: IStockDTO): IStockInputDTO => {
