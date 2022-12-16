@@ -1,5 +1,5 @@
 import { Fragment, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import CategoryList from "../components/Categories/CategoryList";
 import Button, { ButtonType } from "../components/UI/Button";
 import Container from "../components/UI/Container";
@@ -9,13 +9,15 @@ import CategoryContext from "../store/Category/category-context";
 
 const DashboardPage = () => {
     const navigate = useNavigate()
+    const location = useLocation()
+
     const context = useContext(CategoryContext)
 
     return (
         <Fragment>
             <Container>
                 <Headline type={HeadlineType.PRIMARY} caption="Inventar nach Kategorie">Dashboard</Headline>
-                <Button buttonType={ButtonType.PRIMARY} onClickHandler={() => navigate(Routes.ADD_STOCK)}>
+                <Button buttonType={ButtonType.PRIMARY} onClickHandler={() => navigate(Routes.ADD_STOCK, { state: { referer: location.pathname } })}>
                     NEU HINZUFÜGEN
                 </Button>
             </Container>

@@ -1,9 +1,8 @@
 
 import { Fragment, useContext } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { updateStock } from '../../../api/stock'
 import { IStockInputDTO } from '../../../common/dto/StockDTOs'
-import { getByIdRoute, Routes } from '../../../Router'
 import StockContext from '../../../store/Stock/stock-context'
 import Headline, { HeadlineType } from '../../UI/Headline'
 import StockForm from '../StockForm'
@@ -11,6 +10,7 @@ import StockForm from '../StockForm'
 const UpdateStockForm = () => {
     const params: any = useParams()
     const navigate = useNavigate()
+    const location = useLocation()
 
     const stockContext = useContext(StockContext)
 
@@ -18,7 +18,7 @@ const UpdateStockForm = () => {
         if (params.id) {
             const updatedStock = await updateStock(params.id, stock)
             stockContext.updateStock(updatedStock)
-            navigate(getByIdRoute(Routes.CATEGORY_BY_ID, stock.parentCategoryId.toString()))
+            navigate(location.state.referer)
         }
     }
 

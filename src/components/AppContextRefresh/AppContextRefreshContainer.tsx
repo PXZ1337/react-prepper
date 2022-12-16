@@ -3,6 +3,7 @@ import { fetchCategoryData } from "../../api/category"
 import { fetchStocks } from "../../api/stock"
 import useHttp from "../../hooks/use-http"
 import CategoryContext from "../../store/Category/category-context"
+import MenuContext from "../../store/Menu/menu-context"
 import StockContext from "../../store/Stock/stock-context"
 import ErrorBoundary from "../ErrorBoundary/ErrorBoundary"
 import Container from "../UI/Container"
@@ -16,10 +17,12 @@ interface AppContextContainerProps {
 const AppContextRefreshContainer = (props: AppContextContainerProps) => {
     const stockContext = useContext(StockContext)
     const categoryContext = useContext(CategoryContext)
+    const menuContext = useContext(MenuContext)
 
     const { isLoading, error, sendRequest: reloadAppContext } = useHttp()
 
     const appRefreshHandler = async () => {
+        menuContext.setIsVisible(false)
         if (!isLoading) {
             reloadAppContext(async () => {
                 const stocks = await fetchStocks()

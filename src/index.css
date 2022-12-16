@@ -5,21 +5,13 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  height: 100%;
   touch-action: pan-x pan-y;
-}
-
-html {
-  height: 100%;
+  overflow: hidden;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
-}
-
-#root {
-  height: 100%;
 }
 
 a {
@@ -64,6 +56,10 @@ h3 {
   color: #fff !important;
 }
 
+.font-color1 {
+  color: #ff1d58 !important;
+}
+
 .invalid-form-field {
   border-color: #ff1d58 !important;
   color: #ff1d58 !important;
@@ -73,6 +69,10 @@ h3 {
   background-color: #fff685 !important;
   border-color: #fff685 !important;
   color: #494D5F !important;
+}
+
+.font-color3 {
+  color: #fff685 !important;
 }
 
 .color4 {

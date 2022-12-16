@@ -2,4 +2,5 @@
     padding: 0 10px;
     font-size: 0.7rem;
     font-weight: bold;
+    flex-grow: 1;
 }
