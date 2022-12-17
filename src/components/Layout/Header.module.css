@@ -3,13 +3,14 @@
     z-index: 10;
     top: 0;
     width: calc(100% - 2px);
+    height: 90px;
     margin: 0 auto;
     border: 1px solid #fff;
     box-shadow: 0 5px 8px rgba(0, 0, 0, 0.25);
 }
 
 .header .inner {
-    padding: 1.5rem;
+    padding: 25px;
     color: inherit;
     display: flex;
     align-items: center;

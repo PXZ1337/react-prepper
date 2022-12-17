@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { BaseSyntheticEvent, useContext, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ICategoryTree, ICategoryTreeNode, ICategoryDTO } from '../../common/dto/CategoryDTOs';
@@ -29,6 +30,17 @@ const StockForm = (props: StockFormProps) => {
 
     const [isSubmitError, setIsSubmitError] = useState(false);
     const [submitError, setSubmitError] = useState('');
+
+    // Prevent stucking on scroll position on mobile devices after the software keyboard opens.
+    // In that case scrolling would only be possible when the keyboard remains open.
+    // Scroll happens automatically when the user focused the input and the keyboard opens.
+    useEffect(() => {
+        document.body.style.overflowY = 'auto';
+
+        return () => {
+            document.body.style.overflowY = 'hidden';
+        };
+    }, []);
 
     const {
         value: nameValue,

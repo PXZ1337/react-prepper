@@ -1,6 +1,11 @@
 .main {
+    position: relative;
     margin: 0 auto;
-    padding: 6rem 1rem 3rem 1rem;
-    height: calc(100vh - 9rem);
     overflow: scroll;
+    padding: 90px 20px 30px 20px;
+    height: calc(100vh - 120px);
+}
+
+.main.disable-scroll {
+    overflow: hidden !important;
 }
