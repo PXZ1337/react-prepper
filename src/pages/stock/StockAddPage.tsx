@@ -7,9 +7,6 @@ const StockAddPage = () => {
     return (
         <Fragment>
             <Container>
-                <Headline type={HeadlineType.PRIMARY} caption="neuen Bestand hinzufügen">
-                    Erstellen
-                </Headline>
                 <AddStockForm />
             </Container>
         </Fragment>

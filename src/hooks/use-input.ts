@@ -3,11 +3,7 @@ import { initialInputState, InputActionType } from '../store/InputState/InputAct
 import inputStateReducer from '../store/InputState/InputStateReducer';
 
 const useInput = (validateValue: (value: any) => boolean, initialValue: any) => {
-    const [inputState, dispatch] = useReducer(
-        inputStateReducer,
-        { ...initialInputState, value: initialValue }
-
-    );
+    const [inputState, dispatch] = useReducer(inputStateReducer, { ...initialInputState, value: initialValue });
 
     const valueIsValid = validateValue(inputState.value);
     const hasError = !valueIsValid && inputState.isTouched;

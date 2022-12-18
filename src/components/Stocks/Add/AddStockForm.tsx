@@ -1,8 +1,10 @@
-import { useContext } from 'react';
+import { Fragment, useContext } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { createStock } from '../../../api/stock';
 import { IStockInputDTO } from '../../../common/dto/StockDTOs';
+import CategoryContext from '../../../store/Category/category-context';
 import StockContext from '../../../store/Stock/stock-context';
+import Headline, { HeadlineType } from '../../UI/Misc/Headline';
 import StockForm from '../StockForm';
 
 const AddStockForm = () => {
@@ -10,6 +12,10 @@ const AddStockForm = () => {
     const location = useLocation();
 
     const stockContext = useContext(StockContext);
+    const categoryContext = useContext(CategoryContext);
+
+    const categoryTree =
+        location.state && location.state.categoryId != null ? categoryContext.filterTreeByCategory(location.state.categoryId) : categoryContext.categoryTree;
 
     const initialFormValues = {
         name: '',
@@ -29,7 +35,14 @@ const AddStockForm = () => {
         navigate(location.state.referer);
     };
 
-    return <StockForm onSubmitHandler={onSubmitHandler} initialValue={initialFormValues} />;
+    return (
+        <Fragment>
+            <Headline type={HeadlineType.PRIMARY} caption="neuen Bestand hinzufügen">
+                Erstellen
+            </Headline>
+            <StockForm onSubmitHandler={onSubmitHandler} initialValue={initialFormValues} categoryTree={categoryTree} create={true} />
+        </Fragment>
+    );
 };
 
 export default AddStockForm;

@@ -1,7 +1,6 @@
-import { useEffect } from 'react';
-import { BaseSyntheticEvent, useContext, useRef, useState } from 'react';
+import { BaseSyntheticEvent, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ICategoryTree, ICategoryTreeNode, ICategoryDTO } from '../../common/dto/CategoryDTOs';
+import { ICategoryTree, ICategoryTreeNode } from '../../common/dto/CategoryDTOs';
 import { IStockInputDTO } from '../../common/dto/StockDTOs';
 import { extractMessageFromError } from '../../common/Utils';
 import NotEmpty from '../../common/validation/NotEmpty';
@@ -9,7 +8,6 @@ import ValidCategory from '../../common/validation/ValidCategory';
 import ValidUnit from '../../common/validation/ValidUnit';
 import ValueBetween from '../../common/validation/ValueBetween';
 import useInput from '../../hooks/use-input';
-import CategoryContext from '../../store/Category/category-context';
 import ButtonCard from '../UI/Card/ButtonCard';
 import ContentCard from '../UI/Card/ContentCard';
 import Button, { ButtonType } from '../UI/Control/Button';
@@ -19,14 +17,15 @@ import classes from './StockForm.module.css';
 
 interface StockFormProps {
     onSubmitHandler: (stock: IStockInputDTO) => void;
+    create?: boolean;
     initialValue: IStockInputDTO;
+    categoryTree: ICategoryTree[];
 }
 
 const StockForm = (props: StockFormProps) => {
     const categoryRef = useRef<HTMLSelectElement>(null);
 
     const navigate = useNavigate();
-    const categoryContext = useContext(CategoryContext);
 
     const [isSubmitError, setIsSubmitError] = useState(false);
     const [submitError, setSubmitError] = useState('');
@@ -87,7 +86,7 @@ const StockForm = (props: StockFormProps) => {
     let formIsValid = nameIsValid && unitIsValid && stockIsValid && capacityIsValid && expiryIsValid && categoryRef.current && ValidCategory(categoryRef.current.value);
 
     const buildNestedCategorySelect = () => {
-        const selectOptGroups = categoryContext.categoryTree.map((tree: ICategoryTree) => {
+        const selectOptGroups = props.categoryTree.map((tree: ICategoryTree) => {
             return {
                 value: tree.id.toString(),
                 label: tree.name,
@@ -124,7 +123,6 @@ const StockForm = (props: StockFormProps) => {
             const capacity = parseFloat(`${capacityValue}`.replace(',', '.'));
 
             try {
-                console.log(expiryValue);
                 await props.onSubmitHandler({
                     name: nameValue,
                     stock: stock,
@@ -147,19 +145,15 @@ const StockForm = (props: StockFormProps) => {
     const onCategoryChangeHandler = (event: BaseSyntheticEvent) => {
         const [mainCategoryId] = event.target.value.split('__');
 
-        if (mainCategoryId === '') {
-            unitChangeHandler(undefined, 'INVALID MAIN_CATEGORY');
+        if (mainCategoryId === '' || mainCategoryId === '0') {
+            unitChangeHandler(undefined, 'Bitte Kategorie auswählen.');
             return;
         }
 
-        const category: ICategoryDTO = categoryContext.getCategoryById(+mainCategoryId);
-        if (!category || !category.unit) {
-            unitChangeHandler(undefined, 'INVALID UNIT');
-            return;
-        }
+        const rootTree = props.categoryTree.filter((categoryTree: ICategoryTree) => categoryTree.id === +mainCategoryId);
 
         unitBlurHandler();
-        unitChangeHandler(undefined, category.unit);
+        unitChangeHandler(undefined, rootTree[0].unit);
     };
 
     return (
@@ -179,7 +173,7 @@ const StockForm = (props: StockFormProps) => {
                 }}
                 noticeProps={{
                     show: true,
-                    text: 'Bitte einen gültigen Wert eingeben.',
+                    text: 'Bitte einen gültigen Wert für "Bezeichnung" eingeben.',
                 }}
             />
 
@@ -219,7 +213,7 @@ const StockForm = (props: StockFormProps) => {
                     label="Bestand"
                     inputHasErrors={stockHasError}
                     inputProps={{
-                        type: 'numeric',
+                        type: 'number',
                         required: true,
                         placeholder: 'Bestand',
                         value: stockValue,
@@ -229,7 +223,7 @@ const StockForm = (props: StockFormProps) => {
                     }}
                     noticeProps={{
                         show: true,
-                        text: 'Bitte einen gültigen Wert eingeben.',
+                        text: 'Bitte einen gültigen Wert für "Bestand" eingeben.',
                     }}
                 />
                 <Input
@@ -237,7 +231,7 @@ const StockForm = (props: StockFormProps) => {
                     label="Kapazität"
                     inputHasErrors={capacityHasError}
                     inputProps={{
-                        type: 'numeric',
+                        type: 'number',
                         step: '0.10',
                         required: true,
                         placeholder: 'Kapazität',
@@ -248,7 +242,7 @@ const StockForm = (props: StockFormProps) => {
                     }}
                     noticeProps={{
                         show: true,
-                        text: 'Bitte einen gültigen Wert eingeben.',
+                        text: 'Bitte einen gültigen Wert für "Kapazität" eingeben.',
                     }}
                 />
                 <Input
@@ -256,7 +250,7 @@ const StockForm = (props: StockFormProps) => {
                     label="Gesamt"
                     inputHasErrors={stockHasError || capacityHasError}
                     inputProps={{
-                        type: 'numeric',
+                        type: 'number',
                         readOnly: true,
                         required: true,
                         placeholder: 'Gesamtkapazität',
@@ -279,8 +273,8 @@ const StockForm = (props: StockFormProps) => {
                     onFocus: (event: BaseSyntheticEvent) => event.target.select(),
                 }}
                 noticeProps={{
-                    show: true,
-                    text: 'Bitte einen gültigen Wert eingeben.',
+                    show: false,
+                    text: '',
                 }}
             />
 
@@ -290,8 +284,8 @@ const StockForm = (props: StockFormProps) => {
                 <Button buttonType={ButtonType.BACK} onClickHandler={() => navigate(-1)}>
                     ABBRECHEN
                 </Button>
-                <Button buttonType={formIsValid ? ButtonType.PRIMARY : ButtonType.DISABLED} buttonProps={{ type: 'submit' }}>
-                    {props.initialValue.name ? 'ÄNDERN' : 'ERSTELLEN'}
+                <Button buttonType={formIsValid ? ButtonType.PRIMARY : ButtonType.DISABLED} buttonProps={{ type: 'submit', disabled: !formIsValid }}>
+                    {props.create ? 'ERSTELLEN' : 'ÄNDERN'}
                 </Button>
             </ButtonCard>
         </form>

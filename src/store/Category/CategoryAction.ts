@@ -1,32 +1,35 @@
-import { ICategoryDTO, ICategoryTree, ISubCategoryDTO } from "../../common/dto/CategoryDTOs";
+import { ICategoryDTO, ICategoryTree, ISubCategoryDTO } from '../../common/dto/CategoryDTOs';
+import Unit from '../../common/Unit';
 
-export const categoryIterableTypeHelp: ICategoryDTO[] = []
-export const subCategoryIterableTypeHelp: ISubCategoryDTO[] = []
-export const categoryTreeTypeHelp: ICategoryTree[] = [{
-    id: 0,
-    name: 'string',
-    subCategories: subCategoryIterableTypeHelp
-}]
+export const categoryIterableTypeHelp: ICategoryDTO[] = [];
+export const subCategoryIterableTypeHelp: ISubCategoryDTO[] = [];
+export const categoryTreeTypeHelp: ICategoryTree[] = [
+    {
+        id: 0,
+        name: 'string',
+        unit: Unit.G,
+        subCategories: subCategoryIterableTypeHelp,
+    },
+];
 
 export const defaultState = {
     categories: categoryIterableTypeHelp,
     subCategories: subCategoryIterableTypeHelp,
-    categoryTree: categoryTreeTypeHelp
-}
-
+    categoryTree: categoryTreeTypeHelp,
+};
 
 export enum CategoryActionType {
     ADD,
     UPDATE,
     DELETE,
     CALCULATE_TREE,
-    UPDATE_STATE
+    UPDATE_STATE,
 }
 
 export interface ICategoryState {
-    categories: ICategoryDTO[]
-    subCategories: ISubCategoryDTO[],
-    categoryTree: ICategoryTree[]
+    categories: ICategoryDTO[];
+    subCategories: ISubCategoryDTO[];
+    categoryTree: ICategoryTree[];
 }
 
 interface CategoryAction {
@@ -34,4 +37,4 @@ interface CategoryAction {
     payload: any;
 }
 
-export default CategoryAction
+export default CategoryAction;

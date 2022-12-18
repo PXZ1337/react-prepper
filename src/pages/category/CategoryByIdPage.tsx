@@ -43,7 +43,10 @@ const CategoryByIdPage = () => {
                     >
                         ZURÜCK
                     </Button>
-                    <Button buttonType={ButtonType.PRIMARY} onClickHandler={() => navigate(Routes.ADD_STOCK, { state: { referer: location.pathname } })}>
+                    <Button
+                        buttonType={ButtonType.PRIMARY}
+                        onClickHandler={() => navigate(Routes.ADD_STOCK, { state: { referer: location.pathname, categoryId: category.id } })}
+                    >
                         NEU HINZUFÜGEN
                     </Button>
                 </ButtonCard>

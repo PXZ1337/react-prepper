@@ -1,30 +1,31 @@
-import Unit from "../Unit"
+import Unit from '../Unit';
 
 export interface ICategoryDTO {
-    id: number
-    name: string
-    unit: Unit
-    goal: number
+    id: number;
+    name: string;
+    unit: Unit;
+    goal: number;
 }
 
 export interface ISubCategoryDTO {
-    id: number,
-    name: string
-    parent: number
+    id: number;
+    name: string;
+    parent: number;
 }
 
 export interface ICategoryTree {
-    id: number
-    name: string
-    subCategories: ICategoryTreeNode[]
+    id: number;
+    name: string;
+    unit: Unit;
+    subCategories: ICategoryTreeNode[];
 }
 
 export interface ICategoryTreeNode {
-    id: number,
-    name: string,
+    id: number;
+    name: string;
 }
 
 export interface ICategoryData {
-    categories: ICategoryDTO[],
-    subCategories: ISubCategoryDTO[]
+    categories: ICategoryDTO[];
+    subCategories: ISubCategoryDTO[];
 }
