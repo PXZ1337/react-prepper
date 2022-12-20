@@ -1,6 +1,5 @@
 import { useContext } from 'react';
 import MenuContext from '../../store/Menu/menu-context';
-import Navigation from '../Navigation/Navigation';
 import classes from './MainLayout.module.css';
 
 const MainLayout = (props: any) => {
@@ -8,12 +7,7 @@ const MainLayout = (props: any) => {
 
     const classNames = `${classes.main} primary ${menuContext.isVisible ? classes['disable-scroll'] : ''}`;
 
-    return (
-        <main className={classNames}>
-            <Navigation />
-            {props.children}
-        </main>
-    );
+    return <main className={classNames}>{props.children}</main>;
 };
 
 export default MainLayout;

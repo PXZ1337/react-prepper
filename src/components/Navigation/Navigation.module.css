@@ -1,22 +1,21 @@
 .navigation-wrapper {
     position: absolute;
-    height: 100%;
+    top: 90px;
     z-index: 5;
     opacity: 0.98;
-    box-shadow: 1px 3px 4px #000;
-    background: #0049B7;
-    border-radius: 5px;
+    background: #0049b7;
     padding: 25px;
+    height: calc(100% - 140px);
     width: calc(100vw - 50px);
     transition: left 0.2s linear;
 }
 
 .navigation-wrapper.visible {
-    left: 0
+    left: 0;
 }
 
 .navigation-wrapper.invisible {
-    left: -100vw
+    left: -100vw;
 }
 
 .navigation-wrapper ul {
@@ -25,7 +24,7 @@
     margin: 0;
 }
 
-.navigation-item:not(:nth-last-of-type(-n+1)) {
+.navigation-item:not(:nth-last-of-type(-n + 1)) {
     border-bottom: 1px solid #fff;
 }
 

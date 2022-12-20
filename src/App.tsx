@@ -8,6 +8,7 @@ import AppContextContainer from './components/AppContextRefresh/AppContextRefres
 import ErrorBoundaryContainer from './components/ErrorBoundary/ErrorBoundaryContainer';
 import Header from './components/Layout/Header';
 import MainLayout from './components/Layout/MainLayout';
+import Navigation from './components/Navigation/Navigation';
 import Loader from './components/UI/Loader/Loader';
 import CategoryProvider from './store/Category/CategoryProvider';
 import MenuProvider from './store/Menu/MenuProvider';
@@ -31,6 +32,7 @@ function App() {
     return (
         <MenuProvider>
             <Header />
+            <Navigation />
             <MainLayout>
                 <Suspense fallback={<Loader>lade Inventar ...</Loader>}>
                     <Await resolve={data.stocks} errorElement={<ErrorBoundaryContainer />}>
