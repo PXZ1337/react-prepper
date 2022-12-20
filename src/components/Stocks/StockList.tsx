@@ -62,6 +62,10 @@ const StockList = (props: StockListProps) => {
         );
     }
 
+    if (props.items.length === 0) {
+        return <p>Kein Inventar gefunden!</p>;
+    }
+
     const availableStocks = props.items.map((stock: IStockDTO) => {
         return <StockItem key={stock.id} item={stock} increaseStockHandler={increaseStockHandler} reduceStockHandler={reduceStockHandler} />;
     });

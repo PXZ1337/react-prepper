@@ -38,7 +38,7 @@ const StockItem = (props: StockItemProps) => {
 
     return (
         <div className={`${classes['stock-item']} color6`}>
-            <div onClick={reduceClickHandler} className={`${classes.reduce} color1`}>
+            <div data-testid="reduce" onClick={reduceClickHandler} className={`${classes.reduce} color1`}>
                 <MdOutlineExposureNeg1 />
             </div>
             <Link className="font-dark" to={getByIdRoute(Routes.STOCK_BY_ID, props.item.id)} state={{ referer: location.pathname }}>
@@ -67,13 +67,15 @@ const StockItem = (props: StockItemProps) => {
                             <span>
                                 Läuft ab in: <b className={expirationInDays < 30 ? 'font-color1' : ''}>{expirationInDays} Tage(n)</b>
                             </span>
-                            Ablaufdatum: {new Date(props.item.durable).toLocaleDateString()}{' '}
+                            Ablaufdatum: <b>{new Date(props.item.durable).toLocaleDateString()}</b>
                         </span>
                     )}
-                    <span>Aktualisiert {new Date(props.item.dateModified).toLocaleDateString()}</span>
+                    <span>
+                        Aktualisiert: <b>{new Date(props.item.dateModified).toLocaleDateString()}</b>
+                    </span>
                 </div>
             </Link>
-            <div onClick={increaseClickHandler} className={`${classes.increase} color4`}>
+            <div data-testid="increase" onClick={increaseClickHandler} className={`${classes.increase} color4`}>
                 <MdOutlineExposurePlus1 />
             </div>
         </div>

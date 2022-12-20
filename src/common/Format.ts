@@ -1,22 +1,22 @@
-import Unit from "./Unit"
+import Unit from './Unit';
 
 export const formatPercent = (value: number) => {
-    return `${value.toFixed()}%`
-}
+    return `${Math.round(value)}%`;
+};
 
 export const formatUnit = (value: number, unit: string, withUnit: boolean = true) => {
-    let formatted = ''
+    let formatted = '';
     switch (unit) {
         case Unit.G:
-            const kilo = (value / 1000).toFixed(2)
-            formatted = withUnit ? `${kilo}${Unit.KG}` : `${kilo}`
-            break
+            const kilo = (value / 1000).toFixed(2);
+            formatted = withUnit ? `${kilo}${Unit.KG}` : `${kilo}`;
+            break;
         case Unit.items:
-            formatted = withUnit ? `${value} Stück` : `${value}`
-            break
+            formatted = withUnit ? `${value} Stück` : `${value}`;
+            break;
         default:
-            formatted = withUnit ? `${value}${unit}` : `${value}`
+            formatted = withUnit ? `${value}${unit}` : `${value}`;
     }
 
-    return formatted
-}
+    return formatted;
+};

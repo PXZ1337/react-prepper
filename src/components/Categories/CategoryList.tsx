@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import { ICategoryDTO } from '../../common/dto/CategoryDTOs';
 import StockContext from '../../store/Stock/stock-context';
+import Container from '../UI/Container/Container';
 import GridCointainer from '../UI/Container/GridContainer';
 import CategoryGridItem from './CategoryGridItem';
 
@@ -23,7 +24,11 @@ const CategoryList = (props: CategoryListProps) => {
         );
     });
 
-    return <GridCointainer>{availableCategories}</GridCointainer>;
+    if (availableCategories.length === 0) {
+        return <Container>Keine Kategorien gefunden!</Container>;
+    }
+
+    return <GridCointainer>{[availableCategories]}</GridCointainer>;
 };
 
 export default CategoryList;
