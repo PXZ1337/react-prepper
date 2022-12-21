@@ -1,6 +1,7 @@
 import { Fragment, useContext } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import CategoryGridItem from '../../components/Categories/CategoryGridItem';
+import CategoryGridItem from '../../components/Category/CategoryGridItem';
+import MissingCategoryList from '../../components/Category/Missing/MissingCategoryList';
 import StockList from '../../components/Stocks/StockList';
 import ButtonCard from '../../components/UI/Card/ButtonCard';
 import ContentCard from '../../components/UI/Card/ContentCard';
@@ -21,6 +22,7 @@ const CategoryByIdPage = () => {
 
     const category = categoryContext.getCategoryById(+params.id);
     const filtered = stockContext.getStocksByParentCategoryId(category.id);
+    const categoryTree = categoryContext.filterTreeByCategory(category.id);
 
     return (
         <Fragment>
@@ -33,6 +35,7 @@ const CategoryByIdPage = () => {
                     goal={category.goal}
                     unit={category.unit}
                 />
+                <MissingCategoryList categoryTree={categoryTree[0]} stocks={filtered} />
 
                 <ButtonCard>
                     <Button
@@ -45,12 +48,13 @@ const CategoryByIdPage = () => {
                     </Button>
                     <Button
                         buttonType={ButtonType.PRIMARY}
-                        onClickHandler={() => navigate(Routes.ADD_STOCK, { state: { referer: location.pathname, categoryId: category.id } })}
+                        onClickHandler={() =>
+                            navigate(Routes.ADD_STOCK, { state: { referer: location.pathname, categoryId: category.id } })
+                        }
                     >
                         NEU HINZUFÜGEN
                     </Button>
                 </ButtonCard>
-
                 <ContentCard>
                     <Headline type={HeadlineType.PRIMARY}>Inventar ({filtered.length})</Headline>
                     <StockList items={filtered} />

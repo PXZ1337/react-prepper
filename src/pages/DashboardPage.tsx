@@ -1,6 +1,6 @@
 import { Fragment, useContext } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import CategoryList from '../components/Categories/CategoryList';
+import CategoryList from '../components/Category/CategoryList';
 import Container from '../components/UI/Container/Container';
 import Button, { ButtonType } from '../components/UI/Control/Button';
 import Headline, { HeadlineType } from '../components/UI/Misc/Headline';

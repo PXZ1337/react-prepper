@@ -2,12 +2,12 @@ import { createMemoryHistory } from '@remix-run/router';
 import { render, screen } from '@testing-library/react';
 import { Router } from 'react-router-dom';
 import Unit from '../../../common/Unit';
-import CategoryGridItem from '../../../components/Categories/CategoryGridItem';
+import CategoryGridItem from '../../../components/Category/CategoryGridItem';
 import { createCategoryDTO } from '../../TestUtils';
 
 describe('CategoryGridItem', () => {
     test('should render category with unit "G" in "KG"', () => {
-        // Arrangef
+        // Arrange
         const history = createMemoryHistory();
         const category = createCategoryDTO(1, 'category_1', Unit.G, 3000);
         const stock = Math.round(Math.random() * category.goal);
