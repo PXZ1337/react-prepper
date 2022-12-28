@@ -9,10 +9,10 @@ describe('MissingCategoryList', () => {
         // Arrange
         const history = createMemoryHistory();
         const categoryTree = createCategoryTreeDTO();
-        const stock1 = createStockDTO('ID_1', 'stock_1', 1, 1, 1, 1, 'Sub-Category_1', 1);
-        const stock2 = createStockDTO('ID_2', 'stock_2', 1, 1, 1, 1, 'Sub-Category_2', 2);
-        const stock3 = createStockDTO('ID_3', 'stock_3', 1, 1, 1, 1, 'Sub-Category_3', 3);
-        const stock4 = createStockDTO('ID_4', 'stock_4', 1, 1, 1, 1, 'Sub-Category_4', 4);
+        const stock1 = createStockDTO('ID_1', 'stock_1', 1, 1, 1, 1, 'Sub-Category_1', '1');
+        const stock2 = createStockDTO('ID_2', 'stock_2', 1, 1, 1, 1, 'Sub-Category_2', '2');
+        const stock3 = createStockDTO('ID_3', 'stock_3', 1, 1, 1, 1, 'Sub-Category_3', '3');
+        const stock4 = createStockDTO('ID_4', 'stock_4', 1, 1, 1, 1, 'Sub-Category_4', '4');
 
         // Act
         render(
@@ -28,9 +28,9 @@ describe('MissingCategoryList', () => {
         // Arrange
         const history = createMemoryHistory();
         const categoryTree = createCategoryTreeDTO();
-        const stock1 = createStockDTO('ID_1', 'stock_1', 1, 1, 1, 1, 'Sub-Category_1', 1);
-        const stock2 = createStockDTO('ID_2', 'stock_2', 1, 1, 1, 1, 'Sub-Category_2', 2);
-        const stock3 = createStockDTO('ID_3', 'stock_3', 1, 1, 1, 1, 'Sub-Category_3', 3);
+        const stock1 = createStockDTO('ID_1', 'stock_1', 1, 1, 1, 1, 'Sub-Category_1', '1');
+        const stock2 = createStockDTO('ID_2', 'stock_2', 1, 1, 1, 1, 'Sub-Category_2', '2');
+        const stock3 = createStockDTO('ID_3', 'stock_3', 1, 1, 1, 1, 'Sub-Category_3', '3');
 
         // Act
         render(
@@ -48,8 +48,8 @@ describe('MissingCategoryList', () => {
         // Arrange
         const history = createMemoryHistory();
         const categoryTree = createCategoryTreeDTO();
-        const stock1 = createStockDTO('ID_1', 'stock_1', 1, 1, 1, 1, 'Sub-Category_1', 1);
-        const stock2 = createStockDTO('ID_2', 'stock_2', 1, 1, 1, 1, 'Sub-Category_2', 2);
+        const stock1 = createStockDTO('ID_1', 'stock_1', 1, 1, 1, 1, 'Sub-Category_1', '1');
+        const stock2 = createStockDTO('ID_2', 'stock_2', 1, 1, 1, 1, 'Sub-Category_2', '2');
 
         // Act
         render(
@@ -67,7 +67,7 @@ describe('MissingCategoryList', () => {
         // Arrange
         const history = createMemoryHistory();
         const categoryTree = createCategoryTreeDTO();
-        const stock1 = createStockDTO('ID_1', 'stock_1', 1, 1, 1, 1, 'Sub-Category_1', 1);
+        const stock1 = createStockDTO('ID_1', 'stock_1', 1, 1, 1, 1, 'Sub-Category_1', '1');
 
         // Act
         render(
