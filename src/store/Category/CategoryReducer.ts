@@ -1,45 +1,71 @@
-import { ICategoryDTO } from "../../common/dto/CategoryDTOs"
-import CategoryAction, { CategoryActionType, defaultState, ICategoryState } from "./CategoryAction"
+import { ICategoryDTO } from '../../common/dto/CategoryDTOs';
+import { calculateCategoryTree } from '../../common/Utils';
+import CategoryAction, { CategoryActionType, CategoryUpdateEventData, defaultState, ICategoryState } from './CategoryAction';
 
 const CategoryReducer = (state: ICategoryState, action: CategoryAction): ICategoryState => {
     switch (action.type) {
-        case CategoryActionType.ADD:
-            const updated = state.categories.concat(action.payload)
-            return {
-                categories: updated,
-                subCategories: state.subCategories,
-                categoryTree: state.categoryTree
-            }
         case CategoryActionType.UPDATE:
-            const index = state.categories.findIndex((category: ICategoryDTO) => category.id === action.payload.id)
-            const category: ICategoryDTO = state.categories[index]
+            const {
+                categoryData,
+                addedSubCategories: subCategoriesToBeAdded,
+                updatedSubCategories: subCategoriesToBeUpdated,
+                deletedSubCategories: subCategoriesToBeDeleted,
+            }: CategoryUpdateEventData = action.payload;
+
+            const index = state.categories.findIndex((category: ICategoryDTO) => category.id === categoryData.id);
+            const category: ICategoryDTO = state.categories[index];
 
             if (category) {
-                const updatedCategories = [...state.categories]
-                updatedCategories[index] = { ...action.payload }
+                // Update parent category
+                const updatedCategories = [...state.categories];
+                updatedCategories[index] = { ...categoryData };
+
+                // Add new created sub categories
+                const updatedSubCategories = [...state.subCategories].concat(subCategoriesToBeAdded);
+
+                // Update existing sub categories
+                if (subCategoriesToBeUpdated.length > 0) {
+                    subCategoriesToBeUpdated.forEach((toBeUpdated) => {
+                        const index = updatedSubCategories.findIndex((existingSubCategory) => existingSubCategory.id === toBeUpdated.id);
+                        if (index === -1) {
+                            throw Error(
+                                `Inconsistent subCategory-Context. There should be an existing subCategory with the id: ${toBeUpdated.id}`
+                            );
+                        }
+
+                        updatedSubCategories[index] = toBeUpdated;
+                    });
+                }
+
+                // Delete existing sub categories
+                if (subCategoriesToBeDeleted.length > 0) {
+                    subCategoriesToBeDeleted.forEach((subCategoryId: string) => {
+                        const index = updatedSubCategories.findIndex((existingSubCategory) => existingSubCategory.id === subCategoryId);
+                        if (index === -1) {
+                            throw Error(
+                                `Inconsistent subCategory-Context. There should be an existing subCategory with the id: ${subCategoryId}`
+                            );
+                        }
+
+                        updatedSubCategories.splice(index, 1);
+                    });
+                }
 
                 return {
                     categories: updatedCategories,
-                    subCategories: state.subCategories,
-                    categoryTree: state.categoryTree
-                }
+                    subCategories: updatedSubCategories,
+                    categoryTree: calculateCategoryTree({
+                        categories: updatedCategories,
+                        subCategories: updatedSubCategories,
+                    }),
+                };
             }
-            return defaultState
-        case CategoryActionType.DELETE:
-            const deletionIndex = state.categories.findIndex((category: ICategoryDTO) => category.id === action.payload.id)
-            const categories = [...state.categories]
-            categories.splice(deletionIndex, 1)
-
-            return {
-                categories,
-                subCategories: state.subCategories,
-                categoryTree: state.categoryTree
-            }
+            return defaultState;
         case CategoryActionType.UPDATE_STATE:
-            return action.payload
+            return action.payload;
         default:
-            return defaultState
+            return defaultState;
     }
-}
+};
 
-export default CategoryReducer
+export default CategoryReducer;

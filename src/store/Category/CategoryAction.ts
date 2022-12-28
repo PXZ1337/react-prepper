@@ -19,10 +19,7 @@ export const defaultState = {
 };
 
 export enum CategoryActionType {
-    ADD,
     UPDATE,
-    DELETE,
-    CALCULATE_TREE,
     UPDATE_STATE,
 }
 
@@ -35,6 +32,13 @@ export interface ICategoryState {
 interface CategoryAction {
     type: CategoryActionType;
     payload: any;
+}
+
+export interface CategoryUpdateEventData {
+    categoryData: ICategoryDTO;
+    addedSubCategories: ISubCategoryDTO[];
+    updatedSubCategories: ISubCategoryDTO[];
+    deletedSubCategories: string[];
 }
 
 export default CategoryAction;

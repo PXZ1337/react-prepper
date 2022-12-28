@@ -10,7 +10,7 @@ export const createStockDTO = (
     abs: number = 1,
     parentCategoryId: number = 0,
     categoryName: string = 'Test-Category',
-    categoryId: number = 0,
+    categoryId: string = '0',
     unit: string = Unit.G,
     dateModified: string = new Date().toISOString(),
     durable?: string
@@ -30,7 +30,12 @@ export const createStockDTO = (
     };
 };
 
-export const createCategoryDTO = (id: number, name: string, unit: Unit, goal: number): ICategoryDTO => {
+export const createCategoryDTO = (
+    id: number = 1,
+    name: string = 'Test-Category',
+    unit: Unit = Unit.G,
+    goal: number = 5000
+): ICategoryDTO => {
     return {
         id,
         name,
@@ -46,19 +51,19 @@ export const createCategoryTreeDTO = (): ICategoryTree => {
         unit: Unit.G,
         subCategories: [
             {
-                id: 1,
+                id: '1',
                 name: 'Sub-Category_1',
             },
             {
-                id: 2,
+                id: '2',
                 name: 'Sub-Category_2',
             },
             {
-                id: 3,
+                id: '3',
                 name: 'Sub-Category_3',
             },
             {
-                id: 4,
+                id: '4',
                 name: 'Sub-Category_4',
             },
         ],

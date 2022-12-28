@@ -10,6 +10,7 @@ import ValueBetween from '../../common/validation/ValueBetween';
 import useInput from '../../hooks/use-input';
 import ButtonCard from '../UI/Card/ButtonCard';
 import ContentCard from '../UI/Card/ContentCard';
+import FlexContainer from '../UI/Container/FlexContainer';
 import Button, { ButtonType } from '../UI/Control/Button';
 import Input from '../UI/Control/Input';
 import Select from '../UI/Control/Select';
@@ -83,7 +84,14 @@ const StockForm = (props: StockFormProps) => {
         return !!(!isNaN(Date.parse(dateString)) || dateString === '' || !dateString);
     }, props.initialValue.durable);
 
-    let formIsValid = nameIsValid && unitIsValid && stockIsValid && capacityIsValid && expiryIsValid && categoryRef.current && ValidCategory(categoryRef.current.value);
+    let formIsValid =
+        nameIsValid &&
+        unitIsValid &&
+        stockIsValid &&
+        capacityIsValid &&
+        expiryIsValid &&
+        categoryRef.current &&
+        ValidCategory(categoryRef.current.value);
 
     const buildNestedCategorySelect = () => {
         const selectOptGroups = props.categoryTree.map((tree: ICategoryTree) => {
@@ -130,7 +138,7 @@ const StockForm = (props: StockFormProps) => {
                     abs: stock * capacity,
                     parentCategoryId: parseInt(parentCategoryId),
                     categoryName: categoryRef.current.options[categoryRef.current.selectedIndex].text,
-                    categoryId: parseInt(subCategoryId),
+                    categoryId: subCategoryId,
                     unit: unitValue,
                     dateModified: new Date().toISOString(),
                     durable: expiryValue ? expiryValue.toString() : null,
@@ -207,7 +215,7 @@ const StockForm = (props: StockFormProps) => {
                 />
             </div>
 
-            <div className={classes.col1}>
+            <FlexContainer>
                 <Input
                     id="stock"
                     label="Bestand"
@@ -258,7 +266,7 @@ const StockForm = (props: StockFormProps) => {
                     }}
                     noticeProps={{ show: false, text: '' }}
                 />
-            </div>
+            </FlexContainer>
 
             <Input
                 id="expiry"
@@ -284,7 +292,10 @@ const StockForm = (props: StockFormProps) => {
                 <Button buttonType={ButtonType.BACK} onClickHandler={() => navigate(-1)}>
                     ABBRECHEN
                 </Button>
-                <Button buttonType={formIsValid ? ButtonType.PRIMARY : ButtonType.DISABLED} buttonProps={{ type: 'submit', disabled: !formIsValid }}>
+                <Button
+                    buttonType={formIsValid ? ButtonType.PRIMARY : ButtonType.DISABLED}
+                    buttonProps={{ type: 'submit', disabled: !formIsValid }}
+                >
                     {props.create ? 'ERSTELLEN' : 'ÄNDERN'}
                 </Button>
             </ButtonCard>

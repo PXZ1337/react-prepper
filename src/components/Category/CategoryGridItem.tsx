@@ -65,7 +65,7 @@ const CategoryGridItem = (props: CategoryGridItemProps) => {
     };
 
     return (
-        <GridItem onClickHandler={onClickHandler.bind(null, props.id.toString())} classNames={[itemClass]}>
+        <GridItem onClickHandler={onClickHandler.bind(null, props.id.toString())} classNames={[classes['category-grid-item'], itemClass]}>
             <div className={classes.stock}>
                 {formatUnit(props.stock, props.unit, false)} / {formatUnit(props.goal, props.unit)}
             </div>

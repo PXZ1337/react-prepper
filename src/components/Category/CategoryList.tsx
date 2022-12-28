@@ -28,7 +28,11 @@ const CategoryList = (props: CategoryListProps) => {
         return <Container>Keine Kategorien gefunden!</Container>;
     }
 
-    return <GridCointainer>{[availableCategories]}</GridCointainer>;
+    return (
+        <Container>
+            <GridCointainer>{[availableCategories]}</GridCointainer>
+        </Container>
+    );
 };
 
 export default CategoryList;

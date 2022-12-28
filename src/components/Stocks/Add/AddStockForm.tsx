@@ -15,7 +15,9 @@ const AddStockForm = () => {
     const categoryContext = useContext(CategoryContext);
 
     const categoryTree =
-        location.state && location.state.categoryId != null ? categoryContext.filterTreeByCategory(location.state.categoryId) : categoryContext.categoryTree;
+        location.state && location.state.categoryId != null
+            ? categoryContext.filterTreeByCategory(location.state.categoryId)
+            : categoryContext.categoryTree;
 
     const initialFormValues = {
         name: '',
@@ -24,7 +26,7 @@ const AddStockForm = () => {
         abs: 0,
         parentCategoryId: 0,
         categoryName: '',
-        categoryId: 0,
+        categoryId: '0',
         unit: '',
         dateModified: '',
     };

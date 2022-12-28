@@ -1,42 +1,14 @@
 import { useReducer } from 'react';
-import { ICategoryData, ICategoryDTO, ICategoryTree, ISubCategoryDTO } from '../../common/dto/CategoryDTOs';
+import { ICategoryData, ICategoryDTO, ICategoryTree } from '../../common/dto/CategoryDTOs';
+import { calculateCategoryTree } from '../../common/Utils';
 import CategoryContext from './category-context';
-import { CategoryActionType } from './CategoryAction';
+import { CategoryActionType, CategoryUpdateEventData } from './CategoryAction';
 import CategoryReducer from './CategoryReducer';
 
 interface CategoryProviderProps {
     categoryData: ICategoryData;
     children: any;
 }
-
-const calculateCategoryTree = (categoryData: ICategoryData) => {
-    let subCategoryMap = new Map<number, ISubCategoryDTO[]>();
-    categoryData.subCategories.forEach((subCategory) => {
-        const collection = subCategoryMap.get(subCategory.parent);
-        if (!collection) {
-            subCategoryMap.set(subCategory.parent, [subCategory]);
-        } else {
-            collection.push(subCategory);
-        }
-    });
-
-    return categoryData.categories.map((category: ICategoryDTO) => {
-        let subCategories: ISubCategoryDTO[] = [];
-
-        if (subCategoryMap.has(category.id)) {
-            subCategories = subCategoryMap.get(category.id)!;
-        }
-
-        return {
-            id: category.id,
-            name: category.name,
-            unit: category.unit,
-            subCategories: subCategories.map((subCategory: ISubCategoryDTO) => {
-                return subCategory;
-            }),
-        };
-    });
-};
 
 const CategoryProvider = (props: CategoryProviderProps) => {
     const [categoryState, dispatchCategoryAction] = useReducer(CategoryReducer, {
@@ -46,11 +18,14 @@ const CategoryProvider = (props: CategoryProviderProps) => {
     });
 
     // Categories
-    const addCategory = (category: ICategoryDTO) => dispatchCategoryAction({ type: CategoryActionType.ADD, payload: category });
-    const updateCategory = (category: ICategoryDTO) => dispatchCategoryAction({ type: CategoryActionType.UPDATE, payload: category });
-    const removeCategory = (id: number) => dispatchCategoryAction({ type: CategoryActionType.DELETE, payload: { id: id } });
+    const updateCategory = (eventData: CategoryUpdateEventData) =>
+        dispatchCategoryAction({
+            type: CategoryActionType.UPDATE,
+            payload: eventData,
+        });
 
-    const getCategoryById = (id: number): ICategoryDTO => categoryState.categories.filter((category: ICategoryDTO) => category.id === id)[0];
+    const getCategoryById = (id: number): ICategoryDTO =>
+        categoryState.categories.filter((category: ICategoryDTO) => category.id === id)[0];
 
     const updateState = async (categoryData: ICategoryData) => {
         dispatchCategoryAction({
@@ -63,16 +38,16 @@ const CategoryProvider = (props: CategoryProviderProps) => {
     };
 
     // CategoryTree
-    const filterTreeByCategory = (categoryId: number) => categoryState.categoryTree.filter((categoryTree: ICategoryTree) => categoryTree.id === categoryId);
+    const filterTreeByCategory = (categoryId: number) =>
+        categoryState.categoryTree.filter((categoryTree: ICategoryTree) => categoryTree.id === categoryId);
 
     const contextProps = {
         categories: categoryState.categories,
         subCategories: categoryState.subCategories,
         categoryTree: categoryState.categoryTree,
 
-        addCategory,
         updateCategory,
-        removeCategory,
+
         getCategoryById,
         updateState,
 

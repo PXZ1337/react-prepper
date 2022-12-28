@@ -1,15 +1,19 @@
-import classes from './GridItem.module.css'
+import classes from './GridItem.module.css';
 
 interface GridItemProps {
-    onClickHandler: () => void,
-    classNames: string[]
-    children: any
+    onClickHandler?: () => void;
+    classNames?: string[];
+    children: any;
 }
 
 const GridItem = (props: GridItemProps) => {
-    return <div onClick={props.onClickHandler} className={`${classes['grid-item']} ${props.classNames.join(' ')}`}>
-        {props.children}
-    </div>
-}
+    const classNames = (props.classNames ? props.classNames : []).concat([classes['grid-item']]);
 
-export default GridItem
+    return (
+        <div onClick={props.onClickHandler} className={classNames.join(' ')}>
+            {props.children}
+        </div>
+    );
+};
+
+export default GridItem;

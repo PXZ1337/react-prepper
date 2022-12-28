@@ -7,8 +7,19 @@ export interface ICategoryDTO {
     goal: number;
 }
 
+export interface ICategoryInputDTO {
+    name: string;
+    unit: Unit;
+    goal: number;
+}
+
 export interface ISubCategoryDTO {
-    id: number;
+    id: string;
+    name: string;
+    parent: number;
+}
+
+export interface ISubCategoryCreateDTO {
     name: string;
     parent: number;
 }
@@ -21,7 +32,7 @@ export interface ICategoryTree {
 }
 
 export interface ICategoryTreeNode {
-    id: number;
+    id: string;
     name: string;
 }
 

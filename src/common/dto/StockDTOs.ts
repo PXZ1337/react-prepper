@@ -1,28 +1,28 @@
 interface IStockDTO {
-    id: string,
-    name: string,
-    stock: number,
-    capacity: number,
-    abs: number,
-    parentCategoryId: number,
-    categoryName: string,
-    categoryId: number,
-    unit: string,
-    dateModified: string,
-    durable?: string,
+    id: string;
+    name: string;
+    stock: number;
+    capacity: number;
+    abs: number;
+    parentCategoryId: number;
+    categoryName: string;
+    categoryId: string;
+    unit: string;
+    dateModified: string;
+    durable?: string;
 }
 
 export interface IStockInputDTO {
-    name: string,
-    stock: number,
-    capacity: number,
-    abs: number,
-    parentCategoryId: number,
-    categoryName: string
-    categoryId: number,
-    unit: string,
-    dateModified: string,
-    durable?: string,
+    name: string;
+    stock: number;
+    capacity: number;
+    abs: number;
+    parentCategoryId: number;
+    categoryName: string;
+    categoryId: string;
+    unit: string;
+    dateModified: string;
+    durable?: string;
 }
 
 export const mapToStockInputDTO = (stockDTO: IStockDTO): IStockInputDTO => {
@@ -37,8 +37,7 @@ export const mapToStockInputDTO = (stockDTO: IStockDTO): IStockInputDTO => {
         unit: stockDTO.unit,
         dateModified: stockDTO.dateModified,
         durable: stockDTO.durable,
-    }
-}
+    };
+};
 
-
-export default IStockDTO
+export default IStockDTO;

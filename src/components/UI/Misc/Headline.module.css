@@ -3,6 +3,7 @@
     color: #fff;
     border-bottom: 1px solid #fff;
     margin-bottom: 10px;
+    position: relative;
 }
 
 .headline span {

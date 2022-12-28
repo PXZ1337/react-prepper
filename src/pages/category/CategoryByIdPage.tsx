@@ -1,5 +1,6 @@
 import { Fragment, useContext } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { MdModeEdit } from 'react-icons/md';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import CategoryGridItem from '../../components/Category/CategoryGridItem';
 import MissingCategoryList from '../../components/Category/Missing/MissingCategoryList';
 import StockList from '../../components/Stocks/StockList';
@@ -8,7 +9,7 @@ import ContentCard from '../../components/UI/Card/ContentCard';
 import Container from '../../components/UI/Container/Container';
 import Button, { ButtonType } from '../../components/UI/Control/Button';
 import Headline, { HeadlineType } from '../../components/UI/Misc/Headline';
-import { Routes } from '../../Router';
+import { getByIdRoute, Routes } from '../../Router';
 import CategoryContext from '../../store/Category/category-context';
 import StockContext from '../../store/Stock/stock-context';
 
@@ -27,7 +28,16 @@ const CategoryByIdPage = () => {
     return (
         <Fragment>
             <Container>
-                <Headline type={HeadlineType.PRIMARY}>{category.name}</Headline>
+                <Headline type={HeadlineType.PRIMARY}>
+                    {category.name}
+                    <Link
+                        style={{ position: 'absolute', right: 0, top: 8 }}
+                        to={getByIdRoute(Routes.CATEGORY_UPDATE, category.id.toString())}
+                    >
+                        <MdModeEdit />
+                    </Link>
+                </Headline>
+
                 <CategoryGridItem
                     id={category.id}
                     name={category.name}

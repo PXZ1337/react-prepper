@@ -1,0 +1,11 @@
+.category-item > div {
+    width: 90%;
+}
+
+.remove {
+    cursor: pointer;
+    position: absolute;
+    top: 15px;
+    right: 5px;
+    font-size: 25px;
+}
