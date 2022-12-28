@@ -229,7 +229,12 @@ describe('StockForm', () => {
             const categoryTree = createCategoryTreeSelection();
             render(
                 <Router location={history.location} navigator={history}>
-                    <StockForm onSubmitHandler={onSubmitHandler} initialValue={validFormValues} categoryTree={[categoryTree]} create={true} />
+                    <StockForm
+                        onSubmitHandler={onSubmitHandler}
+                        initialValue={validFormValues}
+                        categoryTree={[categoryTree]}
+                        create={true}
+                    />
                 </Router>
             );
             const createButton = await screen.getByText('ERSTELLEN');
@@ -270,7 +275,12 @@ describe('StockForm', () => {
             const categoryTree = createCategoryTreeSelection();
             render(
                 <Router location={history.location} navigator={history}>
-                    <StockForm onSubmitHandler={onSubmitHandler} initialValue={validFormValues} categoryTree={[categoryTree]} create={true} />
+                    <StockForm
+                        onSubmitHandler={onSubmitHandler}
+                        initialValue={validFormValues}
+                        categoryTree={[categoryTree]}
+                        create={true}
+                    />
                 </Router>
             );
 
@@ -321,7 +331,7 @@ const createValidFormValues = (): IStockInputDTO => {
         abs: 50,
         parentCategoryId: 1,
         categoryName: 'Test-Category',
-        categoryId: 0,
+        categoryId: '0',
         unit: Unit.G,
         dateModified: new Date().toLocaleDateString(),
     };
@@ -334,7 +344,7 @@ const createCategoryTreeSelection = (): ICategoryTree => {
         unit: Unit.G,
         subCategories: [
             {
-                id: 0,
+                id: '0',
                 name: 'Test-Category',
             },
         ],
@@ -349,7 +359,7 @@ const createInitialFormValues = (stock: number = 1, capacity: number = 1): IStoc
         abs: 0,
         parentCategoryId: 0,
         categoryName: '',
-        categoryId: 0,
+        categoryId: '0',
         unit: '',
         dateModified: '',
     };

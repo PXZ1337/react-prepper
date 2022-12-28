@@ -12,7 +12,7 @@ describe('StockItem', () => {
         const history = createMemoryHistory();
         const increaseHandler = jest.fn();
         const reduceHandler = jest.fn();
-        const stock = createStockDTO('ID_1', 'stock_1', 1, 1, 1, 0, 'Test-Category_1', 0, Unit.G, new Date().toISOString());
+        const stock = createStockDTO('ID_1', 'stock_1', 1, 1, 1, 0, 'Test-Category_1', '0', Unit.G, new Date().toISOString());
 
         // Act
         render(
@@ -31,7 +31,7 @@ describe('StockItem', () => {
         const history = createMemoryHistory();
         const increaseHandler = jest.fn();
         const reduceHandler = jest.fn();
-        const stock = createStockDTO('ID_1', 'stock_1', 1, 1, 1, 0, 'Test-Category_1', 0, Unit.G, new Date().toISOString());
+        const stock = createStockDTO('ID_1', 'stock_1', 1, 1, 1, 0, 'Test-Category_1', '0', Unit.G, new Date().toISOString());
 
         // Act
         render(

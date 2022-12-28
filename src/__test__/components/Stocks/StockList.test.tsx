@@ -29,8 +29,20 @@ describe('StockList', () => {
         const durable = new Date();
         durable.setDate(durable.getDate() + 365);
 
-        const stock1 = createStockDTO('ID_1', 'stock_1', 1, 1, 1, 0, 'Test-Category_1', 0, Unit.G, dateModified.toISOString(), durable.toISOString());
-        const stock2 = createStockDTO('ID_2', 'stock_2', 1, 1, 1, 0, 'Test-Category_2', 0, Unit.G, dateModified.toISOString());
+        const stock1 = createStockDTO(
+            'ID_1',
+            'stock_1',
+            1,
+            1,
+            1,
+            0,
+            'Test-Category_1',
+            '0',
+            Unit.G,
+            dateModified.toISOString(),
+            durable.toISOString()
+        );
+        const stock2 = createStockDTO('ID_2', 'stock_2', 1, 1, 1, 0, 'Test-Category_2', '0', Unit.G, dateModified.toISOString());
         const stockItems = [stock1, stock2];
         // Act
         render(
@@ -55,8 +67,8 @@ describe('StockList', () => {
     test('should display "Menge" and "Gesamt" correctly formatted', () => {
         // Arrange
         const history = createMemoryHistory();
-        const stock1 = createStockDTO('ID_1', 'stock_1', 10, 40, 400, 0, 'Test-Category_1', 0, Unit.G, new Date().toISOString());
-        const stock2 = createStockDTO('ID_2', 'stock_2', 10, 60, 600, 0, 'Test-Category_2', 0, Unit.G, new Date().toISOString());
+        const stock1 = createStockDTO('ID_1', 'stock_1', 10, 40, 400, 0, 'Test-Category_1', '0', Unit.G, new Date().toISOString());
+        const stock2 = createStockDTO('ID_2', 'stock_2', 10, 60, 600, 0, 'Test-Category_2', '0', Unit.G, new Date().toISOString());
         const stockItems = [stock1, stock2];
 
         // Act
@@ -77,8 +89,8 @@ describe('StockList', () => {
     test('should hide "Ablaufdatum" and "Läuft ab in" when nothing was set', async () => {
         // Arrange
         const history = createMemoryHistory();
-        const stock1 = createStockDTO('ID_1', 'stock_1', 10, 40, 400, 0, 'Test-Category_1', 0, Unit.G, new Date().toISOString());
-        const stock2 = createStockDTO('ID_2', 'stock_2', 10, 60, 600, 0, 'Test-Category_2', 0, Unit.G, new Date().toISOString());
+        const stock1 = createStockDTO('ID_1', 'stock_1', 10, 40, 400, 0, 'Test-Category_1', '0', Unit.G, new Date().toISOString());
+        const stock2 = createStockDTO('ID_2', 'stock_2', 10, 60, 600, 0, 'Test-Category_2', '0', Unit.G, new Date().toISOString());
         const stockItems = [stock1, stock2];
 
         // Act
