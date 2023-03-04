@@ -6,7 +6,7 @@ Simple Headless-Frontend-Application which helps preparing for the worst! Inspir
 
 <p float="middle">
     <img height="300" src="docs/preview.png" />
-    <img height="300" src="docs/stock-view.png" />
+    <img height="300" src="docs/stocks-view.png" />
     <img height="300" src="docs/expiry-view.png" />
     <img height="300" src="docs/update-stock-view.png" />
 </p>
